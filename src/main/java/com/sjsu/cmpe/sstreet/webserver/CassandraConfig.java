@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableCassandraRepositories(basePackages = "com.sjsu.cmpe.sstreet.webserver.repository.cassandra")
+@EnableCassandraRepositories(basePackages = {"com.sjsu.cmpe.sstreet.webserver.repository.cassandra"})
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Value("${cassandra.keyspace}")
