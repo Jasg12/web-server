@@ -52,7 +52,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Override
     public String[] getEntityBasePackages() {
-        return new String[] {"com.thed.zephyr.connect.auditingcloud"};
+        return new String[] {"com.sjsu.cmpe.sstreet.webserver.model"};
     }
 
 }
