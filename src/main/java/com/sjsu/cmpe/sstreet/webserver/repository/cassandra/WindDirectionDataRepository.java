@@ -1,12 +1,13 @@
 package com.sjsu.cmpe.sstreet.webserver.repository.cassandra;
 
 import com.sjsu.cmpe.sstreet.webserver.model.TemperatureSensorData;
+import com.sjsu.cmpe.sstreet.webserver.model.WindDirectionSensorData;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WindDirectionDataRepository extends CassandraRepository<WindDirectionDataRepository, String> {
+public interface WindDirectionDataRepository extends CassandraRepository<WindDirectionSensorData, String> {
 
-    Slice<WindDirectionDataRepository> findAllByIdSmartClusterAndAndIdSensor(Integer idSmartCluster, Integer idSmartNode);
+    Slice<WindDirectionSensorData> findAllByIdSmartClusterAndAndIdSensor(Integer idSmartCluster, Integer idSmartNode);
 }
