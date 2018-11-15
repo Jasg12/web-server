@@ -27,7 +27,7 @@ public class SmartCluster {
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 
-    @OneToMany(mappedBy = "smartCluster", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "smartCluster", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<SmartNode> smartNodeSet;
 
     public SmartCluster(

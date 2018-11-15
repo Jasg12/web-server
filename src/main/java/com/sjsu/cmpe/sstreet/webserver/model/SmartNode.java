@@ -24,7 +24,7 @@ public class SmartNode {
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 
-    @OneToMany(mappedBy = "smartNode", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "smartNode", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Sensor> sensorSet;
 
     @ManyToOne
