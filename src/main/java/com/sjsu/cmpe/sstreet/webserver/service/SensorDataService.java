@@ -1,6 +1,7 @@
 package com.sjsu.cmpe.sstreet.webserver.service;
 
 import com.sjsu.cmpe.sstreet.webserver.model.SensorData;
+import com.sjsu.cmpe.sstreet.webserver.model.TimeRange;
 import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataCRepository;
 import com.sjsu.cmpe.sstreet.webserver.utils.SensorDataSearchQuery;
 import com.sjsu.cmpe.sstreet.webserver.utils.SensorDataSearchResult;
@@ -35,5 +36,17 @@ public class SensorDataService {
             .findAllByIdSmartClusterAndIdSmartNode(searchQuery.getIdSmartCluster(), searchQuery.getIdSmartNode());
 
         return new SensorDataSearchResult<SensorData>(result, searchQuery);
+    }
+
+    public SensorDataSearchResult getDataBySmartClusterAndTimeRange(SensorDataSearchQuery searchQuery, TimeRange timeRange){
+        return null;
+    }
+
+    public SensorDataSearchResult getDataBySmartClusterAndSmartNodeAndTimeRange(SensorDataSearchQuery searchQuery, TimeRange timeRange){
+        return null;
+    }
+
+    public SensorDataSearchResult getDataBySmartClusterAndSmartNode(SensorDataSearchQuery searchQuery){
+        return null;
     }
 }
