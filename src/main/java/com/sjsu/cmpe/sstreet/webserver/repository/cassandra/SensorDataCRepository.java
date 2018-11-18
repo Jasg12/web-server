@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SensorDataCRepository extends CassandraRepository<SensorData, String> {
 
-    Slice<SensorData> findAllByIdSmartClusterAndAndIdSensor(Integer idSmartCluster, Integer idSmartNode);
+    Slice<SensorData> findAllByIdSmartClusterAndIdSmartNode(Integer idSmartCluster, Integer idSmartNode);
 
 }
