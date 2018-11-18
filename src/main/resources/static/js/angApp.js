@@ -17,10 +17,6 @@ angular
     ])
     .config(function ($routeProvider) {
         $routeProvider
-        /*.when('/', {
-            templateUrl: 'views/home.html',
-            controller: 'HomeCtrl'
-        })*/
             .when('/', {
                 templateUrl: 'view/home-page.html'
             })

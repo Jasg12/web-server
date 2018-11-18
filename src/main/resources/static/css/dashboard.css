@@ -20,3 +20,21 @@ body{
 .container-custom{
     padding-top: 60px;
 }
+.form-inline .input-group{
+    margin-right: 15px !important;
+}
+.zip-group{
+    width: 115px;
+}
+.state-group{
+    width: 110px;
+}
+.city-group{
+    width: 175px;
+}
+.user-dashboard-container{
+    margin-top: 40px;
+}
+.table-data{
+    margin-top: 30px;
+}

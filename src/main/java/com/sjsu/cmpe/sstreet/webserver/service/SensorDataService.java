@@ -30,10 +30,10 @@ public class SensorDataService {
     }
 
     public SensorDataSearchResult getSensorDataBySensorType(SensorDataSearchQuery searchQuery){
+
         Slice<SensorData> result = ((SensorDataCRepository)cassandraRepositoryFactory.getRepository(searchQuery.getType()))
-            .findAllByIdSmartClusterAndAndIdSensor(searchQuery.getIdSmartCluster(), searchQuery.getIdSmartNode());
+            .findAllByIdSmartClusterAndIdSmartNode(searchQuery.getIdSmartCluster(), searchQuery.getIdSmartNode());
 
         return new SensorDataSearchResult<SensorData>(result, searchQuery);
     }
-
 }

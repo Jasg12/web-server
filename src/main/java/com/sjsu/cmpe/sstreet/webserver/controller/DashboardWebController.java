@@ -14,5 +14,4 @@ public class DashboardWebController {
         model.addAttribute("title", "Dashboard");
         return "dashboard";
     }
-
 }
