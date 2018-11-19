@@ -1,16 +1,10 @@
-package com.sjsu.cmpe.sstreet.webserver.model;
+package com.sjsu.cmpe.sstreet.webserver.data_transfer;
 
-import javax.persistence.*;
-import java.net.URL;
 import java.util.Date;
 import java.util.Set;
 
-@Entity
-@Table(name = "smart_cluster")
-public class SmartCluster {
+public class SmartClusterDto {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer idSmartCluster;
 
     private String name;
@@ -21,21 +15,16 @@ public class SmartCluster {
 
     private Date installationDate;
 
-//    private URL url;
+    private LocationDto location;
 
-    @OneToOne
-    @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
-    private Location location;
+    private Set<SmartNodeDto> smartNodeSet;
 
-    @OneToMany(mappedBy = "smartCluster", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<SmartNode> smartNodeSet;
-
-    public SmartCluster(
+    public SmartClusterDto(
         String name,
         String model,
         String make,
         Date installationDate,
-        Location location
+        LocationDto location
     ) {
 
         this.name = name;
@@ -45,7 +34,7 @@ public class SmartCluster {
         this.location = location;
     }
 
-    public SmartCluster() {
+    public SmartClusterDto() {
 
     }
 
@@ -99,33 +88,24 @@ public class SmartCluster {
         this.installationDate = installationDate;
     }
 
-    public Location getLocation() {
+    public LocationDto getLocation() {
 
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(LocationDto location) {
 
         this.location = location;
     }
 
-    public Set<SmartNode> getSmartNodeSet() {
+    public Set<SmartNodeDto> getSmartNodeSet() {
 
         return smartNodeSet;
     }
 
-    public void setSmartNodeSet(Set<SmartNode> smartNodeSet) {
+    public void setSmartNodeSet(Set<SmartNodeDto> smartNodeSet) {
 
         this.smartNodeSet = smartNodeSet;
     }
-//
-//    public URL getUrl() {
-//
-//        return url;
-//    }
-//
-//    public void setUrl(URL url) {
-//
-//        this.url = url;
-//    }
+
 }
