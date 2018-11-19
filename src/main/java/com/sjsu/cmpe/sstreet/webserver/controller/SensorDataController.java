@@ -26,31 +26,31 @@ public class SensorDataController{
 
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/(sensortype)")
+    @RequestMapping(method = RequestMethod.GET ,value = "/get/{sensortype}")
     public @ResponseBody
-    SensorDataSearchResult getSensorDataBySensorType(@PathVariable("sensortype") SensorType type){
-        return sensorDataService.getSensorDataBySensorType(type);
+    SensorDataSearchResult getSensorDataBySensorType(@PathVariable("sensortype") SensorDataSearchQuery searchQuery){
+        return sensorDataService.getSensorDataBySensorType(searchQuery);
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/(cluster)/(timerange)")
+    @RequestMapping(method = RequestMethod.GET ,value = "/get/{cluster}/{timerange}")
     public @ResponseBody
-    SensorDataSearchResult getDataBySmartClusterAndTimeRange(@PathVariable("cluster") Integer idSmartCluster ,  @PathVariable("timerange") Long timestamp){
+    SensorDataSearchResult getDataBySmartClusterAndTimeRange(@PathVariable("cluster") SensorDataSearchQuery searchQuery,  @PathVariable("timerange") TimeRange timeRange){
 
-        return sensorDataService.getDataBySmartClusterAndTimeRange(idSmartCluster,timestamp);
+        return sensorDataService.getDataBySmartClusterAndTimeRange(searchQuery,timeRange);
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/(cluster)/(node)/(timerange)")
+    @RequestMapping(method = RequestMethod.GET ,value = "/get/{clusternode}/{timerange}")
     public @ResponseBody
-    SensorDataSearchResult getDataBySmartClusterAndSmartNodeAndTimeRange(@PathVariable("cluster") Integer idSmartCluster,@PathVariable("node") Integer idSmartNode,@PathVariable("timerange") Long timestamp){
+    SensorDataSearchResult getDataBySmartClusterAndSmartNodeAndTimeRange(@PathVariable("clusternode") SensorDataSearchQuery searchQuery,@PathVariable("timerange") TimeRange timeRange){
 
-        return sensorDataService.getDataBySmartClusterAndSmartNodeAndTimeRange(idSmartCluster,idSmartNode,timestamp);
+        return sensorDataService.getDataBySmartClusterAndSmartNodeAndTimeRange(searchQuery,timeRange);
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/(cluster)/(node)")
+    @RequestMapping(method = RequestMethod.GET ,value = "/get/{cluster}/{node}")
     public @ResponseBody
-    SensorDataSearchResult getDataBySmartClusterAndSmartNode(@PathVariable("cluster") Integer idSmartCluster,@PathVariable("node") Integer idSmartNode){
+    SensorDataSearchResult getDataBySmartClusterAndSmartNode(@PathVariable("clusternode") SensorDataSearchQuery searchQuery){
 
-        return sensorDataService.getDataBySmartClusterAndSmartNode(idSmartCluster,idSmartNode);
+        return sensorDataService.getDataBySmartClusterAndSmartNode(searchQuery);
     }
 
 
