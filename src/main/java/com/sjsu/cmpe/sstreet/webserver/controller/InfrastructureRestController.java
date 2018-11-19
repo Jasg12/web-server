@@ -1,12 +1,13 @@
 package com.sjsu.cmpe.sstreet.webserver.controller;
 
+import com.sjsu.cmpe.sstreet.webserver.model.Location;
+import com.sjsu.cmpe.sstreet.webserver.model.Sensor;
+import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
+import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @RestController
 public class InfrastructureRestController {
@@ -24,5 +25,36 @@ public class InfrastructureRestController {
         response.add(streetStat);
 
         return response;
+    }
+
+    @RequestMapping(value = "/infrastructure/{state}/{city}", method = RequestMethod.GET, produces = "application/json")
+    public List getInfrastructureByStateAndCity(@PathVariable("state") String state, @PathVariable("city") String city) {
+
+        return createFakeData();
+    }
+
+
+    private List<SmartCluster> createFakeData(){
+        Location location1 = new Location(37.335720, -121.901672, "CA", "San Jose", "street#1", 94513);
+        Location location2 = new Location(37.336326, -121.901941, "CA", "San Jose", "street#1", 94513);
+        Location location3 = new Location(37.336275, -121.902616, "CA", "San Jose", "street#1", 94513);
+        Location location4 = new Location(37.336744, -121.901930, "CA", "San Jose", "street#1", 94513);
+
+        List<SmartCluster> result = new ArrayList<>();
+        SmartCluster smartCluster1 = new SmartCluster("cluster#1", "model#1", "make#1", new Date(), location1);
+        SmartNode smartNode1 = new SmartNode("node#1", "model#1", "make#1", new Date(), location2);
+        Set<SmartNode> nodes = new HashSet<>();
+        nodes.add(smartNode1);
+        smartCluster1.setSmartNodeSet(nodes);
+        result.add(smartCluster1);
+
+        Sensor sensor1 = new Sensor("sensor#1", "model#1", "make#1", new Date(), "temperature", location3);
+        Sensor sensor2 = new Sensor("sensor#2", "model#1", "make#1", new Date(), "temperature", location4);
+        Set<Sensor> sensors = new HashSet<>();
+        sensors.add(sensor1);
+        sensors.add(sensor2);
+        smartNode1.setSensorSet(sensors);
+
+        return result;
     }
 }

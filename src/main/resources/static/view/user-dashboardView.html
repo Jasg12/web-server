@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-3">
             <form class="form-inline">
-                <select class="form-control">
+                <select ng-model="viewSelector" ng-change="viewChanged()" class="form-control">
                     <option>Statistics</option>
                     <option>Map View</option>
                     <option>Connectivity View</option>
@@ -30,7 +30,7 @@
         </div>
         <div class="col-md-1"></div>
     </div>
-    <div class="row table-data">
+    <div class="row table-data-view">
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <table class="table table-hover">
@@ -51,6 +51,18 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row map-data-view disabled">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div id="map"></div>
+            <div class="map-legend">
+                <img class="legend-img" src="image/cluster-icon.png"><span> - Smart Cluster</span>
+                <img class="legend-img" src="image/node-icon.png"><span> - Smart Node</span>
+                <img class="legend-img" src="image/sensor-icon.png"><span> - Sensor</span>
+            </div>
         </div>
         <div class="col-md-2"></div>
     </div>

@@ -48,6 +48,15 @@ public class SmartNode {
         this.smartCluster = smartCluster;
     }
 
+    public SmartNode(String name, String model, String make, Date installationDate, Location location) {
+
+        this.name = name;
+        this.model = model;
+        this.make = make;
+        this.installationDate = installationDate;
+        this.location = location;
+    }
+
     public SmartNode() {
 
     }

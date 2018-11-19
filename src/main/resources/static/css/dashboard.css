@@ -35,6 +35,21 @@ body{
 .user-dashboard-container{
     margin-top: 40px;
 }
-.table-data{
+.table-data-view{
     margin-top: 30px;
+}
+.map-data-view{
+    margin-top: 30px;
+}
+.disabled{
+    display: none;
+}
+#map{
+    height: 550px;
+}
+.legend-img{
+    height: 20px;
+}
+.map-legend{
+    margin-top: 20px;
 }

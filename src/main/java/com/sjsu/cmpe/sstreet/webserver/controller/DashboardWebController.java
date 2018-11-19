@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DashboardWebController {
 
     @GetMapping("/")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+    public String getDashboard(Model model) {
         model.addAttribute("title", "Dashboard");
         return "dashboard";
     }

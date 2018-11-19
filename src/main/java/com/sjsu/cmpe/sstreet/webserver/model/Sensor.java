@@ -48,6 +48,16 @@ public class Sensor {
         this.smartNode = smartNode;
     }
 
+    public Sensor(String name, String model, String make, Date installationDate, String type, Location location) {
+
+        this.name = name;
+        this.model = model;
+        this.make = make;
+        this.installationDate = installationDate;
+        this.type = type;
+        this.location = location;
+    }
+
     public Sensor() {
 
     }
