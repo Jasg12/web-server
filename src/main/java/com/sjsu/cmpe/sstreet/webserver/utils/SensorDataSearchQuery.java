@@ -8,13 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public class SensorDataSearchQuery {
-
-    private Integer idSmartCluster;
-
-    private Integer idSmartNode;
-
-    private SensorType type;
+public abstract class SensorDataSearchQuery {
 
     private Integer maxResult;
 
@@ -27,28 +21,15 @@ public class SensorDataSearchQuery {
     public SensorDataSearchQuery() {
     }
 
-    public SensorDataSearchQuery(Integer idSmartCluster, Integer idSmartNode, SensorType type, Integer maxResult, String continuation) {
+    public SensorDataSearchQuery(Integer maxResult, String continuation) {
 
-        this.idSmartCluster = idSmartCluster;
-        this.idSmartNode = idSmartNode;
-        this.type = type;
         this.maxResult = maxResult;
         this.continuation = continuation;
     }
 
-    public Integer getIdSmartCluster() {
+    public void setMaxResult(Integer maxResult) {
 
-        return idSmartCluster;
-    }
-
-    public Integer getIdSmartNode() {
-
-        return idSmartNode;
-    }
-
-    public SensorType getType() {
-
-        return type;
+        this.maxResult = maxResult;
     }
 
     public Integer getMaxResult() {
@@ -82,20 +63,5 @@ public class SensorDataSearchQuery {
         }
 
         return page;
-    }
-
-    @Override
-    public String toString(){
-        StringBuffer sb = new StringBuffer();
-        sb.append("SearchQuery - ");
-        sb.append("product: ").append(this.idSmartCluster).append(", ");
-        sb.append("tenantId: ").append(this.idSmartNode).append(", ");
-        sb.append("entityType: ").append(this.type).append(", ");
-        sb.append("maxResult: ").append(this.maxResult).append(", ");
-        sb.append("direction: ").append(this.direction).append(", ");
-        sb.append("sortProperty: ").append(this.sortProperty).append(", ");
-        sb.append("continuation: ").append(this.continuation).append(" ");
-
-        return sb.toString();
     }
 }

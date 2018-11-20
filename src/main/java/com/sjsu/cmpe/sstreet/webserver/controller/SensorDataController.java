@@ -1,18 +1,11 @@
 package com.sjsu.cmpe.sstreet.webserver.controller;
 
-import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterDto;
-import com.sjsu.cmpe.sstreet.webserver.model.SensorData;
-import com.sjsu.cmpe.sstreet.webserver.model.SensorType;
-import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.model.TimeRange;
 import com.sjsu.cmpe.sstreet.webserver.service.SensorDataService;
-import com.sjsu.cmpe.sstreet.webserver.service.SmartClusterService;
-import com.sjsu.cmpe.sstreet.webserver.utils.SensorDataSearchQuery;
-import com.sjsu.cmpe.sstreet.webserver.utils.SensorDataSearchResult;
+import com.sjsu.cmpe.sstreet.webserver.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Method;
 
 @RestController
 @RequestMapping(value = "/sensor_data")
@@ -26,33 +19,41 @@ public class SensorDataController{
 
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/{sensortype}")
-    public @ResponseBody
-    SensorDataSearchResult getSensorDataBySensorType(@PathVariable("sensortype") SensorDataSearchQuery searchQuery){
-        return sensorDataService.getSensorDataBySensorType(searchQuery);
+    @RequestMapping(method = RequestMethod.POST ,value = "/sensor/data/by/cluster/from/{from}/to/{to}", produces = "application/json")
+    public SensorDataSearchResult getDataBySmartClusterAndTimeRange(
+        @RequestBody SensorDataByClusterQuery searchQuery,
+        @PathVariable("from") long from,
+        @PathVariable("to") long to){
+        TimeRange timeRange = new TimeRange(from, to);
+
+        return sensorDataService.getDataBySmartClusterAndTimeRange(searchQuery, timeRange);
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/{cluster}/{timerange}")
-    public @ResponseBody
-    SensorDataSearchResult getDataBySmartClusterAndTimeRange(@PathVariable("cluster") SensorDataSearchQuery searchQuery,  @PathVariable("timerange") TimeRange timeRange){
+    @RequestMapping(method = RequestMethod.POST, value = "/sensor/data/by/node/from/{from}/to/{to}")
+    public SensorDataSearchResult getDataBySmartNodeAndTimeRange(
+        @RequestBody SensorDataByNodeQuery searchQuery,
+        @PathVariable("from") long from,
+        @PathVariable("to") long to){
+        TimeRange timeRange = new TimeRange(from, to);
 
-        return sensorDataService.getDataBySmartClusterAndTimeRange(searchQuery,timeRange);
+        return sensorDataService.getDataBySmartNodeAndTimeRange(searchQuery, timeRange);
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/{clusternode}/{timerange}")
-    public @ResponseBody
-    SensorDataSearchResult getDataBySmartClusterAndSmartNodeAndTimeRange(@PathVariable("clusternode") SensorDataSearchQuery searchQuery,@PathVariable("timerange") TimeRange timeRange){
+    @RequestMapping(method = RequestMethod.POST, value = "/sensor/data/by/sensor/from/{from}/to/{to}")
+    public SensorDataSearchResult getDataBySensorAndTimeRange(
+        @RequestBody SensorDataBySensorQuery searchQuery,
+        @PathVariable("from") long from,
+        @PathVariable("to") long to){
+        TimeRange timeRange = new TimeRange(from, to);
 
-        return sensorDataService.getDataBySmartClusterAndSmartNodeAndTimeRange(searchQuery,timeRange);
+        return sensorDataService.getDataBySensorAndTimeRange(searchQuery, timeRange);
     }
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/get/{cluster}/{node}")
+    @RequestMapping(method = RequestMethod.POST, value = "/sensor/data/by/sensor")
     public @ResponseBody
-    SensorDataSearchResult getDataBySmartClusterAndSmartNode(@PathVariable("clusternode") SensorDataSearchQuery searchQuery){
+    SensorDataSearchResult getSensorDataBySensor(@RequestBody SensorDataBySensorQuery searchQuery){
 
-        return sensorDataService.getDataBySmartClusterAndSmartNode(searchQuery);
+        return sensorDataService.getDataBySensor(searchQuery);
     }
-
-
 
 }

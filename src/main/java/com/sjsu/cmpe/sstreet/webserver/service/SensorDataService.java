@@ -1,11 +1,14 @@
 package com.sjsu.cmpe.sstreet.webserver.service;
 
-import com.sjsu.cmpe.sstreet.webserver.model.SensorData;
 import com.sjsu.cmpe.sstreet.webserver.model.TimeRange;
-import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataCRepository;
-import com.sjsu.cmpe.sstreet.webserver.utils.SensorDataSearchQuery;
-import com.sjsu.cmpe.sstreet.webserver.utils.SensorDataSearchResult;
-import com.sjsu.cmpe.sstreet.webserver.utils.factory.CassandraRepositoryFactory;
+import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorData;
+import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorDataByCluster;
+import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorDataByNode;
+import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorDataBySensor;
+import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataByClusterRepo;
+import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataByNodeRepo;
+import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataBySensorRepo;
+import com.sjsu.cmpe.sstreet.webserver.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -13,40 +16,50 @@ import org.springframework.stereotype.Service;
 @Service
 public class SensorDataService {
 
-    private SensorDataCRepository sensorDataCRepository;
-    private CassandraRepositoryFactory cassandraRepositoryFactory;
+    private SensorDataByClusterRepo sensorDataByClusterRepo;
+    private SensorDataByNodeRepo sensorDataByNodeRepo;
+    private SensorDataBySensorRepo sensorDataBySensorRepo;
+
 
     public SensorDataService(
-        @Autowired SensorDataCRepository sensorDataCRepository,
-        @Autowired CassandraRepositoryFactory cassandraRepositoryFactory
+        @Autowired SensorDataByClusterRepo sensorDataByClusterRepo,
+        @Autowired SensorDataByNodeRepo sensorDataByNodeRepo,
+        @Autowired SensorDataBySensorRepo sensorDataBySensorRepo
     ) {
-        this.sensorDataCRepository = sensorDataCRepository;
-        this.cassandraRepositoryFactory = cassandraRepositoryFactory;
+        this.sensorDataByClusterRepo = sensorDataByClusterRepo;
+        this.sensorDataByNodeRepo = sensorDataByNodeRepo;
+        this.sensorDataBySensorRepo = sensorDataBySensorRepo;
     }
 
     public SensorData save(SensorData sensorData){
+        sensorDataByClusterRepo.save(new SensorDataByCluster(sensorData));
+        sensorDataByNodeRepo.save(new SensorDataByNode(sensorData));
+        sensorDataBySensorRepo.save(new SensorDataBySensor(sensorData));
 
-        SensorData savedSensorData = sensorDataCRepository.save(sensorData);
-        return savedSensorData;
+        return null;
     }
 
-    public SensorDataSearchResult getSensorDataBySensorType(SensorDataSearchQuery searchQuery){
+    public SensorDataSearchResult getDataBySmartClusterAndTimeRange(SensorDataByClusterQuery searchQuery, TimeRange timeRange){
 
-        Slice<SensorData> result = ((SensorDataCRepository)cassandraRepositoryFactory.getRepository(searchQuery.getType()))
-            .findAllByIdSmartClusterAndIdSmartNode(searchQuery.getIdSmartCluster(), searchQuery.getIdSmartNode());
-
+        Slice<SensorDataByCluster> result = sensorDataByClusterRepo.findByIdSmartClusterAndTimeRange(searchQuery.getClusterId(), timeRange.getFrom().getTime(), timeRange.getTo().getTime(), searchQuery.getPage());
         return new SensorDataSearchResult<SensorData>(result, searchQuery);
     }
 
-    public SensorDataSearchResult getDataBySmartClusterAndTimeRange(SensorDataSearchQuery searchQuery, TimeRange timeRange){
-        return null;
+    public SensorDataSearchResult getDataBySmartNodeAndTimeRange(SensorDataByNodeQuery searchQuery, TimeRange timeRange){
+        Slice<SensorDataByNode> result = sensorDataByNodeRepo.findByIdSmartNodeAndTimeRange(searchQuery.getNodeId(), timeRange.getFrom().getTime(), timeRange.getTo().getTime(), searchQuery.getPage());
+
+        return new SensorDataSearchResult<SensorDataByNode>(result, searchQuery);
     }
 
-    public SensorDataSearchResult getDataBySmartClusterAndSmartNodeAndTimeRange(SensorDataSearchQuery searchQuery, TimeRange timeRange){
-        return null;
+    public SensorDataSearchResult getDataBySensor(SensorDataBySensorQuery searchQuery){
+        Slice<SensorDataBySensor> result = sensorDataBySensorRepo.findAllByIdSensor(searchQuery.getSensorId(), searchQuery.getPage());
+
+        return new SensorDataSearchResult<SensorDataBySensor>(result, searchQuery);
     }
 
-    public SensorDataSearchResult getDataBySmartClusterAndSmartNode(SensorDataSearchQuery searchQuery){
-        return null;
+    public SensorDataSearchResult getDataBySensorAndTimeRange(SensorDataBySensorQuery searchQuery, TimeRange timeRange){
+        Slice<SensorDataBySensor> result = sensorDataBySensorRepo.findByIdSensorAndTimeRange(searchQuery.getSensorId(), timeRange.getFrom().getTime(), timeRange.getTo().getTime(), searchQuery.getPage());
+
+        return new SensorDataSearchResult<SensorDataBySensor>(result, searchQuery);
     }
 }

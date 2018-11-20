@@ -1,15 +1,20 @@
-package com.sjsu.cmpe.sstreet.webserver.model;
+package com.sjsu.cmpe.sstreet.webserver.model.cassandra;
 
-import org.springframework.data.cassandra.core.mapping.Table;
+import com.sjsu.cmpe.sstreet.webserver.model.TemperatureType;
 
-@Table(value = "sensor_temperature_data")
-public class TemperatureSensorData extends SensorData {
+public class TemperatureSensorValue extends SensorValue {
 
     private Integer temperature;
 
     private TemperatureType dataType;
 
-    public TemperatureSensorData() {
+    public TemperatureSensorValue(Integer temperature, TemperatureType dataType) {
+
+        this.temperature = temperature;
+        this.dataType = dataType;
+    }
+
+    public TemperatureSensorValue() {
 
     }
 

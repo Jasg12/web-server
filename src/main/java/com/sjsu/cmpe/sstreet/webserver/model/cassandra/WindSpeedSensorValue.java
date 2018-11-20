@@ -1,16 +1,21 @@
-package com.sjsu.cmpe.sstreet.webserver.model;
+package com.sjsu.cmpe.sstreet.webserver.model.cassandra;
 
-import org.springframework.data.cassandra.core.mapping.Table;
+import com.sjsu.cmpe.sstreet.webserver.model.SpeedType;
 
-@Table(value = "sensor_wind_speed_data")
-public class WindSpeedSensorData extends SensorData {
+public class WindSpeedSensorValue extends SensorValue  {
 
     private Integer speed;
 
     private SpeedType dataType;
 
-    public WindSpeedSensorData() {
+    public WindSpeedSensorValue() {
 
+    }
+
+    public WindSpeedSensorValue(Integer speed, SpeedType dataType) {
+
+        this.speed = speed;
+        this.dataType = dataType;
     }
 
     public Integer getSpeed() {
@@ -32,4 +37,5 @@ public class WindSpeedSensorData extends SensorData {
 
         this.dataType = dataType;
     }
+
 }
