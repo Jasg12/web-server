@@ -24,9 +24,6 @@ public class SmartNode {
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 
-    @OneToMany(mappedBy = "smartNode", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Sensor> sensorSet;
-
     @ManyToOne
     @JoinColumn(name = "smart_cluster_idSmartCluster")
     private SmartCluster smartCluster;
@@ -119,16 +116,6 @@ public class SmartNode {
     public void setLocation(Location location) {
 
         this.location = location;
-    }
-
-    public Set<Sensor> getSensorSet() {
-
-        return sensorSet;
-    }
-
-    public void setSensorSet(Set<Sensor> sensorSet) {
-
-        this.sensorSet = sensorSet;
     }
 
     public SmartCluster getSmartCluster() {

@@ -158,7 +158,9 @@ public class SmartClusterService {
         return smartClusterRepository.findAllByLocation_CityAndLocation_Street(city, street);
     }
 
-
+    public List<SmartCluster> getSmartClusterByCity(String city){
+        return smartClusterRepository.findAllByLocation_City(city);
+    }
 
 
 }

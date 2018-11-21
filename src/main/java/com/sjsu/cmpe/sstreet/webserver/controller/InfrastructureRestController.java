@@ -87,7 +87,7 @@ public class InfrastructureRestController {
         Set<Sensor> sensors = new HashSet<>();
         sensors.add(sensor1);
         sensors.add(sensor2);
-        smartNode1.setSensorSet(sensors);
+      //  smartNode1.setSensorSet(sensors);
 
         return result;
     }
