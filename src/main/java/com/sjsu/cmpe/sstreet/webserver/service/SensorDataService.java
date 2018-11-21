@@ -1,10 +1,9 @@
 package com.sjsu.cmpe.sstreet.webserver.service;
 
+import com.sjsu.cmpe.sstreet.webserver.model.SensorType;
+import com.sjsu.cmpe.sstreet.webserver.model.TemperatureType;
 import com.sjsu.cmpe.sstreet.webserver.model.TimeRange;
-import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorData;
-import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorDataByCluster;
-import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorDataByNode;
-import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorDataBySensor;
+import com.sjsu.cmpe.sstreet.webserver.model.cassandra.*;
 import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataByClusterRepo;
 import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataByNodeRepo;
 import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorDataBySensorRepo;
@@ -12,6 +11,10 @@ import com.sjsu.cmpe.sstreet.webserver.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class SensorDataService {
@@ -40,26 +43,26 @@ public class SensorDataService {
     }
 
     public SensorDataSearchResult getDataBySmartClusterAndTimeRange(SensorDataByClusterQuery searchQuery, TimeRange timeRange){
-
         Slice<SensorDataByCluster> result = sensorDataByClusterRepo.findByIdSmartClusterAndTimeRange(searchQuery.getClusterId(), timeRange.getFrom().getTime(), timeRange.getTo().getTime(), searchQuery.getPage());
-        return new SensorDataSearchResult<SensorData>(result, searchQuery);
+
+        return new SensorDataSearchResult<>(result, searchQuery);
     }
 
     public SensorDataSearchResult getDataBySmartNodeAndTimeRange(SensorDataByNodeQuery searchQuery, TimeRange timeRange){
         Slice<SensorDataByNode> result = sensorDataByNodeRepo.findByIdSmartNodeAndTimeRange(searchQuery.getNodeId(), timeRange.getFrom().getTime(), timeRange.getTo().getTime(), searchQuery.getPage());
 
-        return new SensorDataSearchResult<SensorDataByNode>(result, searchQuery);
+        return new SensorDataSearchResult<>(result, searchQuery);
     }
 
     public SensorDataSearchResult getDataBySensor(SensorDataBySensorQuery searchQuery){
         Slice<SensorDataBySensor> result = sensorDataBySensorRepo.findAllByIdSensor(searchQuery.getSensorId(), searchQuery.getPage());
 
-        return new SensorDataSearchResult<SensorDataBySensor>(result, searchQuery);
+        return new SensorDataSearchResult<>(result, searchQuery);
     }
 
     public SensorDataSearchResult getDataBySensorAndTimeRange(SensorDataBySensorQuery searchQuery, TimeRange timeRange){
         Slice<SensorDataBySensor> result = sensorDataBySensorRepo.findByIdSensorAndTimeRange(searchQuery.getSensorId(), timeRange.getFrom().getTime(), timeRange.getTo().getTime(), searchQuery.getPage());
 
-        return new SensorDataSearchResult<SensorDataBySensor>(result, searchQuery);
+        return new SensorDataSearchResult<>(result, searchQuery);
     }
 }

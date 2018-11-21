@@ -4,8 +4,12 @@ public class SensorDataBySensorQuery extends SensorDataSearchQuery {
 
     private Integer sensorId;
 
-    public SensorDataBySensorQuery(Integer sensorId) {
+    public SensorDataBySensorQuery(){
+        super();
+    }
 
+    public SensorDataBySensorQuery(Integer sensorId) {
+        super();
         this.sensorId = sensorId;
     }
 

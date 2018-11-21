@@ -39,19 +39,42 @@ public class SensorDataSearchResult<T> {
     }
 
     public List<? extends T> getContent() {
+
         return content;
     }
 
+    public void setContent(List<? extends T> content) {
+
+        this.content = content;
+    }
+
     public Integer getMaxResult() {
+
         return maxResult;
     }
 
+    public void setMaxResult(Integer maxResult) {
+
+        this.maxResult = maxResult;
+    }
+
     public String getContinuation() {
+
         return continuation;
     }
 
+    public void setContinuation(String continuation) {
+
+        this.continuation = continuation;
+    }
+
     public String getDirection() {
+
         return direction;
     }
 
+    public void setDirection(String direction) {
+
+        this.direction = direction;
+    }
 }

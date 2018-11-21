@@ -41,6 +41,12 @@ body{
 .map-data-view{
     margin-top: 30px;
 }
+.connectivity-data-view{
+    margin-top: 30px;
+}
+.sensor-data-view{
+    margin-top: 30px;
+}
 .disabled{
     display: none;
 }
@@ -52,4 +58,13 @@ body{
 }
 .map-legend{
     margin-top: 20px;
+}
+.node-group{
+    width: 125px;
+}
+.sensor-group{
+    width: 125px;
+}
+.date-group{
+    width: 165px;
 }

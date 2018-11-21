@@ -106,10 +106,6 @@ public class SmartClusterService {
 
     public ResponseEntity<String> getSmartClusterStatusById(Integer id){
 
-
-
-
-
         return null;
 
     }

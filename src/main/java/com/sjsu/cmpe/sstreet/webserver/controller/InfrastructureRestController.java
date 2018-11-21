@@ -27,11 +27,45 @@ public class InfrastructureRestController {
         return response;
     }
 
+
+    @RequestMapping(value = "/infrastructure/connectivity/cluster/{state}/{city}", method = RequestMethod.GET, produces = "application/json")
+    public List getConnectivityStatistic(@PathVariable("state") String state, @PathVariable("city") String city) {
+
+        SmartCluster cluster = new SmartCluster();
+        cluster.setLocation(new Location(state, city, "Washington 1"));
+        cluster.setIdSmartCluster(1);
+
+        SmartCluster cluster2 = new SmartCluster();
+        cluster2.setLocation(new Location(state, city, "Washington 1"));
+        cluster2.setIdSmartCluster(2);
+
+        // This is the fake data for the testing purpose
+        List<Map> response = new ArrayList<>();
+        Map<String, Object> streetStat1 = new TreeMap<>();
+        streetStat1.put("cluster", cluster);
+        streetStat1.put("status", "UP");
+
+        Map<String, Object> streetStat2 = new TreeMap<>();
+        streetStat2.put("cluster", cluster2);
+        streetStat2.put("status", "DOWN");
+
+        response.add(streetStat1);
+        response.add(streetStat2);
+
+        return response;
+    }
+
     @RequestMapping(value = "/infrastructure/{state}/{city}", method = RequestMethod.GET, produces = "application/json")
     public List getInfrastructureByStateAndCity(@PathVariable("state") String state, @PathVariable("city") String city) {
 
         return createFakeData();
     }
+
+
+
+
+
+
 
 
     private List<SmartCluster> createFakeData(){

@@ -47,6 +47,13 @@ public class Location {
         this.zipCode = zipCode;
     }
 
+    public Location(String state, String city, String street) {
+
+        this.state = state;
+        this.city = city;
+        this.street = street;
+    }
+
     public Integer getIdLocation() {
 
         return IdLocation;

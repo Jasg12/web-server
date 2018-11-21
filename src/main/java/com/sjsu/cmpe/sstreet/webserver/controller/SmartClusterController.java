@@ -4,11 +4,14 @@ import com.sjsu.cmpe.sstreet.webserver.data_transfer.LocationDto;
 import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterDto;
 import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterUpdateDto;
 
+import com.sjsu.cmpe.sstreet.webserver.model.Location;
+import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.service.SmartClusterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -87,5 +90,23 @@ public class SmartClusterController {
         return smartClusterService.deleteSmartClusterById(idSmartCluster);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/clusters/{state}/{city}", produces = "application/json")
+    public List<SmartCluster> getClustersByCity(@PathVariable("state") String state, @PathVariable("city") String city){
+        List<SmartCluster> result = new ArrayList<>();
+        SmartCluster cluster = new SmartCluster();
+        cluster.setLocation(new Location(state, city, "Washington 1"));
+        cluster.setIdSmartCluster(1);
+        cluster.setName("Cluster#1");
+
+        SmartCluster cluster2 = new SmartCluster();
+        cluster2.setLocation(new Location(state, city, "Washington 1"));
+        cluster2.setIdSmartCluster(2);
+        cluster2.setName("Cluster#2");
+
+        result.add(cluster);
+        result.add(cluster2);
+
+        return result;
+    }
 
 }
