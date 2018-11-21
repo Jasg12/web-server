@@ -79,7 +79,7 @@ public class InfrastructureRestController {
         SmartNode smartNode1 = new SmartNode("node#1", "model#1", "make#1", new Date(), location2);
         Set<SmartNode> nodes = new HashSet<>();
         nodes.add(smartNode1);
-        smartCluster1.setSmartNodeSet(nodes);
+     //   smartCluster1.setSmartNodeSet(nodes);
         result.add(smartCluster1);
 
         Sensor sensor1 = new Sensor("sensor#1", "model#1", "make#1", new Date(), "temperature", location3);
