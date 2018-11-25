@@ -1,16 +1,16 @@
 package com.sjsu.cmpe.sstreet.webserver.model;
 
-public class Holder {
+public class SearchSmartNodeBySmartClusterWrapper {
 
     private SmartNode smartNode;
     private Integer idSmartCluster;
 
-    public Holder(SmartNode smartNode, Integer idSmartCluster) {
+    public SearchSmartNodeBySmartClusterWrapper(SmartNode smartNode, Integer idSmartCluster) {
         this.smartNode = smartNode;
         this.idSmartCluster = idSmartCluster;
     }
 
-    public Holder() {
+    public SearchSmartNodeBySmartClusterWrapper() {
     }
 
     public SmartNode getSmartNode() {

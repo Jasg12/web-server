@@ -1,6 +1,6 @@
 package com.sjsu.cmpe.sstreet.webserver.controller;
 
-import com.sjsu.cmpe.sstreet.webserver.model.Holder;
+import com.sjsu.cmpe.sstreet.webserver.model.SearchSmartNodeBySmartClusterWrapper;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +43,9 @@ public class SmartNodeController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
     public @ResponseBody
-    ResponseEntity<String> createSmartNode(@RequestBody Holder holder) {
+    ResponseEntity<String> createSmartNode(@RequestBody SearchSmartNodeBySmartClusterWrapper searchSmartNodeBySmartClusterWrapper) {
 
-        return smartNodeService.createSmartNode(holder.getSmartNode(), holder.getIdSmartCluster());
+        return smartNodeService.createSmartNode(searchSmartNodeBySmartClusterWrapper.getSmartNode(), searchSmartNodeBySmartClusterWrapper.getIdSmartCluster());
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update")
