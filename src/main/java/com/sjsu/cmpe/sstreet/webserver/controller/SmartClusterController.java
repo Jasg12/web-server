@@ -27,69 +27,53 @@ public class SmartClusterController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public @ResponseBody
-    ResponseEntity<String> createSmartCluster(@RequestBody SmartClusterDto smartClusterDto){
+    public @ResponseBody ResponseEntity<String> createSmartCluster(@RequestBody SmartCluster smartCluster){
 
-        return smartClusterService.createSmartCluster(smartClusterDto);
+        return smartClusterService.createSmartCluster(smartCluster);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update")
-    public @ResponseBody
-    ResponseEntity<String> updateSmartCluster(@RequestBody SmartClusterUpdateDto smartClusterUpdateDto){
+    public @ResponseBody ResponseEntity<String> updateSmartCluster(@RequestBody SmartCluster smartCluster){
 
-        return smartClusterService.updateSmartCluster(smartClusterUpdateDto);
+        return smartClusterService.updateSmartCluster(smartCluster);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/all")
-    public @ResponseBody
-    List<SmartClusterDto> getAllSmartCluster(){
+    public @ResponseBody List<SmartCluster> getAllSmartCluster(){
 
         return smartClusterService.getAllSmartClusters();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byId/{idSmartCluster}")
-    public @ResponseBody
-    SmartClusterDto getSmartClusterById(@PathVariable(value = "idSmartCluster") Integer idSmartCluster){
+    public @ResponseBody SmartCluster getSmartClusterById(@PathVariable(value = "idSmartCluster") Integer idSmartCluster){
 
         return smartClusterService.getSmartClusterById(idSmartCluster);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/get/status/byId/{idSmartCluster}")
-    public @ResponseBody
-    ResponseEntity<String> getSmartClusterStatusById(@PathVariable(value = "idSmartCluster") Integer idSmartCluster){
-
-        return smartClusterService.getSmartClusterStatusById(idSmartCluster);
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/get/byLocation")
-    public @ResponseBody
-    SmartClusterDto getSmartClusterByLocation(@RequestBody LocationDto locationDto){
+    public @ResponseBody SmartCluster getSmartClusterByLocation(@RequestBody Location location){
 
-        return smartClusterService.getSmartClusterByLocation(locationDto);
+        return smartClusterService.getSmartClusterByLocation(location);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/get/byName/{name}")
-    public @ResponseBody
-    SmartClusterDto getSmartClusterByName(@PathVariable(value = "name") String name){
+    public @ResponseBody SmartCluster getSmartClusterByName(@PathVariable(value = "name") String name){
 
         return smartClusterService.getSmartClusterByName(name);
     }
 
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete/byName/{name}")
-    public @ResponseBody
-    ResponseEntity<String> deleteSmartClusterByName(@PathVariable(value = "name") String name){
+    public @ResponseBody ResponseEntity<String> deleteSmartClusterByName(@PathVariable(value = "name") String name){
 
         return smartClusterService.deleteSmartClusterByName(name);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete/byId/{id}")
-    public @ResponseBody
-    ResponseEntity<String> deleteSmartClusterById(@PathVariable(value = "id") Integer idSmartCluster){
+    public @ResponseBody ResponseEntity<String> deleteSmartClusterById(@PathVariable(value = "id") Integer idSmartCluster){
 
         return smartClusterService.deleteSmartClusterById(idSmartCluster);
     }
-
     @RequestMapping(method = RequestMethod.GET, value = "/clusters/{state}/{city}", produces = "application/json")
     public List<SmartCluster> getClustersByCity(@PathVariable("state") String state, @PathVariable("city") String city){
 

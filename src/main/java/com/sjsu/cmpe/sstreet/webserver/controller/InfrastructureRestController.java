@@ -7,6 +7,7 @@ import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URL;
 import java.util.*;
 
 @RestController
@@ -75,7 +76,7 @@ public class InfrastructureRestController {
         Location location4 = new Location(37.336744, -121.901930, "CA", "San Jose", "street#1", 94513);
 
         List<SmartCluster> result = new ArrayList<>();
-        SmartCluster smartCluster1 = new SmartCluster("cluster#1", "model#1", "make#1", new Date(), location1);
+        SmartCluster smartCluster1 = new SmartCluster("cluster#1", "model#1", "make#1",new Date(), null, location1);
         SmartNode smartNode1 = new SmartNode("node#1", "model#1", "make#1", new Date(), location2);
         Set<SmartNode> nodes = new HashSet<>();
         nodes.add(smartNode1);

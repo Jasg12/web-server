@@ -21,7 +21,7 @@ public class Sensor {
 
     private String type;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 

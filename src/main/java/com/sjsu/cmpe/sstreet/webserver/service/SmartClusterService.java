@@ -28,9 +28,8 @@ public class SmartClusterService {
         this.modelMapper = new ModelMapper();
     }
 
-    public ResponseEntity<String> createSmartCluster(SmartClusterDto smartClusterDto) {
+    public ResponseEntity<String> createSmartCluster(SmartCluster smartCluster) {
 
-        SmartCluster smartCluster = modelMapper.map(smartClusterDto, SmartCluster.class);
         SmartCluster savedSmartCluster = smartClusterRepository.save(smartCluster);
 
         if(null != savedSmartCluster){
@@ -43,9 +42,8 @@ public class SmartClusterService {
 
     }
 
-    public ResponseEntity<String> updateSmartCluster(SmartClusterUpdateDto smartClusterUpdateDto){
+    public ResponseEntity<String> updateSmartCluster(SmartCluster smartCluster){
 
-        SmartCluster smartCluster = modelMapper.map(smartClusterUpdateDto, SmartCluster.class);
 
         Optional<SmartCluster> smartClusterResult = smartClusterRepository.findById(smartCluster.getIdSmartCluster());
 
@@ -63,7 +61,7 @@ public class SmartClusterService {
                 return ResponseEntity.ok("Smart Cluster updated");
 
             }else{
-                return new ResponseEntity<>("Smart Cluster Update Failed",HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>("Smart Cluster  Failed",HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
         }else{
@@ -72,69 +70,63 @@ public class SmartClusterService {
 
     }
 
-    public List<SmartClusterDto> getAllSmartClusters(){
+    public List<SmartCluster> getAllSmartClusters(){
 
         Iterable<SmartCluster> smartClusterIterable = smartClusterRepository.findAll();
-        List<SmartClusterDto> smartClusterList  = new ArrayList<>();
+        List<SmartCluster> smartClusterList  = new ArrayList<>();
 
         smartClusterIterable.forEach(smartCluster ->
-                smartClusterList.add(modelMapper.map(smartCluster, SmartClusterDto.class))
+                smartClusterList.add(modelMapper.map(smartCluster, SmartCluster.class))
 
         );
 
         return smartClusterList;
     }
 
-    public SmartClusterDto getSmartClusterById(Integer id){
+    public SmartCluster getSmartClusterById(Integer id){
 
         Optional<SmartCluster> smartClusterOptional = smartClusterRepository.findById(id);
-        List<SmartClusterDto> smartClusterDto = new ArrayList<>();
+        List<SmartCluster> smartCluster = new ArrayList<>();
 
         if(!smartClusterOptional.isPresent()) {
 
             return null;
         }
 
-        smartClusterOptional.ifPresent(smartCluster ->
-                smartClusterDto.add(modelMapper.map(smartCluster,SmartClusterDto.class))
+        smartClusterOptional.ifPresent( smartCluster1 ->
+
+                smartCluster.add(smartCluster1)
 
         );
-
-        return smartClusterDto.get(0);
-
-    }
-
-    public ResponseEntity<String> getSmartClusterStatusById(Integer id){
-
-        return null;
+        return smartCluster.get(0);
 
     }
 
-    public SmartClusterDto getSmartClusterByName(String Name){
+    public SmartCluster getSmartClusterByName(String Name){
 
         Optional<SmartCluster> smartClusterOptional = smartClusterRepository.findByName(Name);
-        List<SmartClusterDto> smartClusterDto = new ArrayList<>();
+        List<SmartCluster> smartCluster = new ArrayList<>();
 
         if(!smartClusterOptional.isPresent()) {
 
             return null;
         }
 
-        smartClusterOptional.ifPresent(smartCluster ->
-                smartClusterDto.add(modelMapper.map(smartCluster,SmartClusterDto.class))
+        smartClusterOptional.ifPresent( smartCluster1 ->
+
+                smartCluster.add(smartCluster1)
 
         );
 
-        return smartClusterDto.get(0);
+        return smartCluster.get(0);
 
     }
 
-    public SmartClusterDto getSmartClusterByLocation(LocationDto locationDto){
+    public SmartCluster getSmartClusterByLocation(Location location){
 
-        Location location = modelMapper.map(locationDto, Location.class);
         SmartCluster smartCluster = smartClusterRepository.findByLocation(location);
 
-        return modelMapper.map(smartCluster, SmartClusterDto.class);
+        return modelMapper.map(smartCluster, SmartCluster.class);
 
 
     }
