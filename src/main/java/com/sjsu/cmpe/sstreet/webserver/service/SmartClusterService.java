@@ -1,14 +1,9 @@
 package com.sjsu.cmpe.sstreet.webserver.service;
 
-import com.sjsu.cmpe.sstreet.webserver.data_transfer.LocationDto;
-import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterDto;
-import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterUpdateDto;
 
 import com.sjsu.cmpe.sstreet.webserver.model.Location;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
-import com.sjsu.cmpe.sstreet.webserver.model.search.InfrastructureStatistic;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartClusterRepository;
-import org.apache.catalina.Cluster;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
