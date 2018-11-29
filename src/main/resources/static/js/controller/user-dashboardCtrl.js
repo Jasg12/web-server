@@ -175,6 +175,7 @@ dashboardApp.controller('UserDashboardCtrl', ['$scope', '$http', '$location', '$
                 });
         }
 
+
         function getClusters() {
             var url = '/smart_cluster/clusters/' + $scope.state + '/' + $scope.city;
             console.log("Prepare the call to url:" + url);
@@ -235,13 +236,13 @@ dashboardApp.controller('UserDashboardCtrl', ['$scope', '$http', '$location', '$
 
 
         function addClustersToMap(map, clusters){
-            console.log("Add clusters into map");
+            console.log("Add clusters into map", clusters);
             for(var i=0;i<clusters.length;i++){
                 var cluster = clusters[i];
                 var clusterLocation = cluster.location;
                 addOverlaytoMap(clusterLocation.longitude, clusterLocation.latitude, 'image/cluster-icon.png', map);
-                for(var j=0;j<cluster.smartNodeSet.length;j++){
-                    var node = clusters[i].smartNodeSet[j];
+                for(var j=0;j<cluster.nodes.length;j++){
+                    var node = clusters[i].nodes[j];
                     var nodeLocation = node.location;
                     addOverlaytoMap(nodeLocation.longitude, nodeLocation.latitude, 'image/node-icon.png', map);
                     var path = [
@@ -250,8 +251,8 @@ dashboardApp.controller('UserDashboardCtrl', ['$scope', '$http', '$location', '$
                     ];
                     drawPolyLine(path, map);
 
-                    for (var t=0;t<node.sensorSet.length;t++){
-                        var sensor = node.sensorSet[t];
+                    for (var t=0;t<node.sensors.length;t++){
+                        var sensor = node.sensors[t];
                         var sensorLocation = sensor.location;
                         addOverlaytoMap(sensorLocation.longitude, sensorLocation.latitude, 'image/sensor-icon.png', map);
                         var path = [

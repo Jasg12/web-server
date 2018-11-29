@@ -20,4 +20,6 @@ public interface SmartNodeRepository extends CrudRepository<SmartNode, Integer> 
 
     void deleteBySmartCluster(SmartCluster smartCluster);
 
+    List<SmartNode> findAllByLocation_StateAndLocation_City(String state, String city);
+
 }

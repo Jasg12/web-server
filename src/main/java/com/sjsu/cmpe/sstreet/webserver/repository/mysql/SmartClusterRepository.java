@@ -19,6 +19,6 @@ public interface SmartClusterRepository extends CrudRepository<SmartCluster, Int
 
     void deleteByName(String name);
 
-    List<SmartCluster> findAllByLocation_City(String city);
+    List<SmartCluster> findAllByLocation_StateAndLocation_City(String state, String city);
 
 }

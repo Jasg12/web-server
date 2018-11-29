@@ -6,16 +6,16 @@ import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterUpdateDto;
 
 import com.sjsu.cmpe.sstreet.webserver.model.Location;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
+import com.sjsu.cmpe.sstreet.webserver.model.search.InfrastructureStatistic;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartClusterRepository;
+import org.apache.catalina.Cluster;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SmartClusterService {
@@ -150,9 +150,7 @@ public class SmartClusterService {
         return smartClusterRepository.findAllByLocation_CityAndLocation_Street(city, street);
     }
 
-    public List<SmartCluster> getSmartClusterByCity(String city){
-        return smartClusterRepository.findAllByLocation_City(city);
+    public List<SmartCluster> getSmartClusterByCity(String state, String city){
+        return smartClusterRepository.findAllByLocation_StateAndLocation_City(state, city);
     }
-
-
 }

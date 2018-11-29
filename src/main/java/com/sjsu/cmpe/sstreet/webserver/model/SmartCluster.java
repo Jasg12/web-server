@@ -3,6 +3,7 @@ package com.sjsu.cmpe.sstreet.webserver.model;
 import javax.persistence.*;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "smart_cluster")
@@ -21,6 +22,9 @@ public class SmartCluster {
     private Date installationDate;
 
     private URL url;
+
+    @Transient
+    private List<SmartNode> nodes;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
@@ -110,5 +114,15 @@ public class SmartCluster {
     public void setUrl(URL url) {
 
         this.url = url;
+    }
+
+    public List<SmartNode> getNodes() {
+
+        return nodes;
+    }
+
+    public void setNodes(List<SmartNode> nodes) {
+
+        this.nodes = nodes;
     }
 }

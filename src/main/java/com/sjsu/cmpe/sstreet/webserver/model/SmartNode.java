@@ -2,6 +2,7 @@ package com.sjsu.cmpe.sstreet.webserver.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,6 +28,9 @@ public class SmartNode {
     @ManyToOne
     @JoinColumn(name = "smart_cluster_idSmartCluster")
     private SmartCluster smartCluster;
+
+    @Transient
+    private List<Sensor> sensors;
 
     public SmartNode(
         String name,
@@ -126,5 +130,15 @@ public class SmartNode {
     public void setSmartCluster(SmartCluster smartCluster) {
 
         this.smartCluster = smartCluster;
+    }
+
+    public List<Sensor> getSensors() {
+
+        return sensors;
+    }
+
+    public void setSensors(List<Sensor> sensors) {
+
+        this.sensors = sensors;
     }
 }
