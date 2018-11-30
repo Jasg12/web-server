@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SmartClusterService {
@@ -147,9 +145,7 @@ public class SmartClusterService {
         return smartClusterRepository.findAllByLocation_CityAndLocation_Street(city, street);
     }
 
-    public List<SmartCluster> getSmartClusterByCity(String city){
-        return smartClusterRepository.findAllByLocation_City(city);
+    public List<SmartCluster> getSmartClusterByCity(String state, String city){
+        return smartClusterRepository.findAllByLocation_StateAndLocation_City(state, city);
     }
-
-
 }

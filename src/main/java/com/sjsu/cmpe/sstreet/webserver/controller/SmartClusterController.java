@@ -1,7 +1,5 @@
 package com.sjsu.cmpe.sstreet.webserver.controller;
 
-
-
 import com.sjsu.cmpe.sstreet.webserver.model.Location;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.service.SmartClusterService;
@@ -75,8 +73,8 @@ public class SmartClusterController {
     @RequestMapping(method = RequestMethod.GET, value = "/clusters/{state}/{city}", produces = "application/json")
     public List<SmartCluster> getClustersByCity(@PathVariable("state") String state, @PathVariable("city") String city){
 
-        return smartClusterService.getSmartClusterByCity(city);
-       /* List<SmartCluster> result = new ArrayList<>();
+     //   return smartClusterService.getSmartClusterByCity(city);
+        List<SmartCluster> result = new ArrayList<>();
         SmartCluster cluster = new SmartCluster();
         cluster.setLocation(new Location(state, city, "Washington 1"));
         cluster.setIdSmartCluster(1);
@@ -88,9 +86,9 @@ public class SmartClusterController {
         cluster2.setName("Cluster#2");
 
         result.add(cluster);
-        result.add(cluster2);*/
+        result.add(cluster2);
 
-    //    return result;
+        return result;
     }
 
 }

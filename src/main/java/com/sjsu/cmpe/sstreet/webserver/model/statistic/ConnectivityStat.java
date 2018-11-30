@@ -1,0 +1,64 @@
+package com.sjsu.cmpe.sstreet.webserver.model.statistic;
+
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
+
+@Table(value = "connectivity_stat")
+public class ConnectivityStat {
+
+    @PrimaryKeyColumn(ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    private Integer id;
+
+    @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    private EntityType entityType;
+
+    private ConnectionStatus status;
+
+    @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.CLUSTERED)
+    private Long timestamp;
+
+    public ConnectivityStat() {
+
+    }
+
+    public Integer getId() {
+
+        return id;
+    }
+
+    public void setId(Integer id) {
+
+        this.id = id;
+    }
+
+    public EntityType getEntityType() {
+
+        return entityType;
+    }
+
+    public void setEntityType(EntityType entityType) {
+
+        this.entityType = entityType;
+    }
+
+    public ConnectionStatus getStatus() {
+
+        return status;
+    }
+
+    public void setStatus(ConnectionStatus status) {
+
+        this.status = status;
+    }
+
+    public Long getTimestamp() {
+
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+
+        this.timestamp = timestamp;
+    }
+}
