@@ -1,8 +1,6 @@
 package com.sjsu.cmpe.sstreet.webserver.controller;
 
-import com.sjsu.cmpe.sstreet.webserver.data_transfer.LocationDto;
-import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterDto;
-import com.sjsu.cmpe.sstreet.webserver.data_transfer.SmartClusterUpdateDto;
+
 
 import com.sjsu.cmpe.sstreet.webserver.model.Location;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
