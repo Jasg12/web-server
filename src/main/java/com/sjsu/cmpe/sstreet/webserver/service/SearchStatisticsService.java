@@ -3,7 +3,11 @@ package com.sjsu.cmpe.sstreet.webserver.service;
 import com.sjsu.cmpe.sstreet.webserver.model.Sensor;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
+import com.sjsu.cmpe.sstreet.webserver.model.TimeRange;
 import com.sjsu.cmpe.sstreet.webserver.model.search.InfrastructureStatistic;
+import com.sjsu.cmpe.sstreet.webserver.model.statistic.ConnectivityStat;
+import com.sjsu.cmpe.sstreet.webserver.model.statistic.EntityType;
+import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.ConnectivityStatRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SensorRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartClusterRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartNodeRepository;
@@ -21,17 +25,20 @@ public class SearchStatisticsService {
     private SmartClusterRepository smartClusterRepository;
     private SmartNodeRepository smartNodeRepository;
     private SensorRepository sensorRepository;
+    private ConnectivityStatRepository connectivityStatRepository;
 
     @Autowired
     public SearchStatisticsService(
         SmartClusterRepository smartClusterRepository,
         SmartNodeRepository smartNodeRepository,
-        SensorRepository sensorRepository
+        SensorRepository sensorRepository,
+        ConnectivityStatRepository connectivityStatRepository
     ) {
 
         this.smartClusterRepository = smartClusterRepository;
         this.smartNodeRepository = smartNodeRepository;
         this.sensorRepository = sensorRepository;
+        this.connectivityStatRepository = connectivityStatRepository;
     }
 
     public Collection<InfrastructureStatistic> getInfrastructureStatistic(String state, String city){
@@ -72,5 +79,9 @@ public class SearchStatisticsService {
         }
 
         return statisticMap.values();
+    }
+
+    public List<ConnectivityStat> getConnectivityStatByTimeRange(Integer id, EntityType entityType, TimeRange timeRange){
+        return  connectivityStatRepository.findAllByIdAndEntityTypeAndTimeRange(id, entityType.toString(), timeRange.getFrom().getTime(), timeRange.getTo().getTime());
     }
 }
