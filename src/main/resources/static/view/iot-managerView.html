@@ -1,3 +1,259 @@
 <div class="iot-manager-dashboard-container">
-    <h1>This is the IoT Manager Dashboard Page</h1>
+    <h1>Infrastructure Manager</h1>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+
+        .modal-open {
+            padding-right: 0 !important;
+        }
+        /* Shrinking the sidebar from 250px to 80px and center aligining its content*/
+        #sidebar.active {
+            min-width: 80px;
+            max-width: 80px;
+            text-align: center;
+        }
+
+        /* Toggling the sidebar header content, hide the big heading [h3] and showing the small heading [strong] and vice versa*/
+        #sidebar .sidebar-header strong {
+            display: none;
+        }
+        #sidebar.active .sidebar-header h3 {
+            display: none;
+        }
+        #sidebar.active .sidebar-header strong {
+            display: block;
+        }
+
+        #sidebar ul li a {
+            text-align: left;
+        }
+
+        #sidebar.active ul li a {
+            padding: 20px 10px;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        #sidebar.active ul li a i {
+            margin-right:  0;
+            display: block;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        /* Same dropdown links padding*/
+        #sidebar.active ul ul a {
+            padding: 10px !important;
+        }
+
+        /* Changing the arrow position to bottom center position,
+           translateX(50%) works with right: 50%
+           to accurately  center the arrow */
+        #sidebar.active .dropdown-toggle::after {
+            top: auto;
+            bottom: 10px;
+            right: 50%;
+            -webkit-transform: translateX(50%);
+            -ms-transform: translateX(50%);
+            transform: translateX(50%);
+        }
+    </style>
+    <nav id="sidebar" class="sidebar-expand-lg sidebar-light bg-light">
+
+        <div id="dismiss">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+
+        <ul class="sidebar-nav mr-auto">
+            <p>Dashboard</p>
+            <li class="nav-item active" ng-repeat="menuItem in menuList">
+                <a href="#{{menuItem.href}}" data-toggle="collapse" aria-expanded="false">{{menuItem.name}}</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <div id="content">
+        <header class="masthead text-center text-white d-flex header" id = "">
+            <div class="container my-auto">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <h1 class="text-uppercase" style="color: rgba(0,0,0,0.88)">
+                            <strong>List of Smart Clusters: </strong>
+                        </h1>
+                        <hr>
+                    </div>
+                    <div class="col-lg-8 mx-auto">
+
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>#ID</th>
+                                <th>Name</th>
+                                <th>Model</th>
+                                <th>Make</th>
+                                <th>Installation Date</th>
+                                <th>Street</th>
+                                <th>City</th>
+                            </tr>
+                            <tr ng-repeat="cluster in clusterList">
+                                <td>{{ cluster.idSmartCluster }}</td>
+                                <td>{{ cluster.name }}</td>
+                                <td>{{ cluster.model }}</td>
+                                <td>{{ cluster.make }}</td>
+                                <td>{{ cluster.installationDate }}</td>
+                                <td>{{ cluster.location.street }}</td>
+                                <td>{{ cluster.location.city }}</td>
+                                <td>
+                                    <button class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#ViewNodesModal" ng-click="onClickViewNode(cluster)">View Nodes
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <button class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#CreateClusterModal">Create A Cluster
+                        </button>
+                        <button class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#AddSmartNodeModal">Add Smart Node
+                        </button>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <div class="modal fade in modal-open" id="CreateClusterModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #337ab7; color:white; width:100.2%">
+
+                        <h4 class="modal-title" id="registerModalHeader">Enter Cluster Information</h4>
+                        <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
+                    </div>
+                    <div class="modal-body" style="font-family:sans-serif; font-size:15px;" id="modal-body">
+                        <form novalidate id="create_cluster" ng-submit="submitCreateClusterForm()">
+                            Cluster Name:<br>
+                            <input type="text" ng-model="clusterCreateData.name"><br>
+                            Cluster Model:<br>
+                            <input type="text" ng-model="clusterCreateData.model"><br>
+                            Cluster Make:<br>
+                            <input type="text" ng-model="clusterCreateData.make"><br>
+                            State:<br>
+                            <input type="text" ng-model="clusterCreateData.location.state"><br>
+                            City:<br>
+                            <input type="text" ng-model="clusterCreateData.location.city"><br>
+                            Street:<br>
+                            <input type="text" ng-model="clusterCreateData.location.street"><br>
+                            ZIP Code:<br>
+                            <input type="text" ng-model="clusterCreateData.location.zipCode"><br>
+                            Latitude:<br>
+                            <input type="text" ng-model="clusterCreateData.location.latitude"><br>
+                            Longitude:<br>
+                            <input type="text" ng-model="clusterCreateData.location.longitude"><br>
+                            IP Address:<br>
+                            <input type="text" ng-model="clusterCreateData.url"><br>
+
+                            <br>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal fade in modal-open" id="AddSmartNodeModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #337ab7; color:white; width:100.2%">
+
+                        <h4 class="modal-title" id="addSmartModalHeader">Enter Smart Node Information</h4>
+                        <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
+                    </div>
+                    <div class="modal-body" style="font-family:sans-serif; font-size:15px;" id="add_node_modal-body">
+                        <form novalidate id="add_node" ng-submit="submitAddNodeForm()">
+                            Smart Node Name:<br>
+                            <input type="text" ng-model="smartNodeAddData.name"><br>
+                            Smart Node Model:<br>
+                            <input type="text" ng-model="smartNodeAddData.model"><br>
+                            Smart Node Make:<br>
+                            <input type="text" ng-model="smartNodeAddData.make"><br>
+                            <br>
+                            <select ng-model="smartNodeAddData.smartCluster.idSmartCluster" required>
+                                <option ng-repeat="x in clusterList" value="{{x.idSmartCluster }}">{{x.name }} at {{x.street }} street</option>
+                            </select>
+                            {{smartNodeAddData.smartCluster.idSmartCluster}}
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade in modal-open" id="ViewNodesModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #337ab7; color:white; width:100.2%">
+
+                    <h4 class="modal-title" id="ViewNodesModalHeader">Smart Node Information for {{currentCluster.name}} cluster</h4>
+                    <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
+                </div>
+                <div class="modal-body" style="font-family:sans-serif; font-size:15px;" id="ViewNodesModal-body">
+
+
+                    <table class="table">
+
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>#ID</th>
+                            <th>Name</th>
+                            <th>Model</th>
+                            <th>Make</th>
+                            <th>Installation Date</th>
+                            <th>Street</th>
+                            <th>City</th>
+                            <th>Sensors</th>
+                        </tr>
+                        <tr ng-repeat="node in nodeList">
+                            <td>{{ node.idSmartNode}}</td>
+                            <td>{{ node.name }}</td>
+                            <td>{{ node.model }}</td>
+                            <td>{{ node.make }}</td>
+                            <td>{{ node.installationDate }}</td>
+                            <td>{{ node.location.street }}</td>
+                            <td>{{ node.location.city }}</td>
+                            <td>
+                                Temperature, Wind Direction, Wind Speed
+                            </td>
+                        </tr>
+                    </table>
+
+            </div>
+
+        </div>
+    </div>
 </div>
+
+</div>
+
+
+
