@@ -142,4 +142,14 @@ public class Sensor {
 
         this.smartNode = smartNode;
     }
+
+    public void copy(Sensor sensor){
+        this.name = sensor.getName();
+        this.model = sensor.getModel();
+        this.make = sensor.getMake();
+        this.installationDate = sensor.getInstallationDate();
+        this.type = sensor.getType();
+        this.location = sensor.getLocation();
+    }
+
 }

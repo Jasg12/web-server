@@ -2,6 +2,7 @@ package com.sjsu.cmpe.sstreet.webserver.controller;
 
 import com.sjsu.cmpe.sstreet.webserver.model.SearchSmartNodeBySmartClusterWrapper;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
+import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -102,6 +103,5 @@ public class SmartNodeController {
 
         return smartNodeService.deleteSmartNodeBySmartCluster(smartCluster);
     }
-
 
 }

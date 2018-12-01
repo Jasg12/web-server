@@ -4,6 +4,7 @@ package com.sjsu.cmpe.sstreet.webserver.service;
 import com.sjsu.cmpe.sstreet.webserver.model.Location;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartClusterRepository;
+import com.sjsu.cmpe.sstreet.webserver.utils.EntityUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,10 +44,12 @@ public class SmartClusterService {
         Optional<SmartCluster> smartClusterResult = smartClusterRepository.findById(smartCluster.getIdSmartCluster());
 
         smartClusterResult.ifPresent(result->{
-            smartCluster.setName(result.getName());
-            smartCluster.setMake(result.getMake());
-            smartCluster.setModel(result.getModel());
-            smartCluster.setInstallationDate(result.getInstallationDate());
+//            smartCluster.setName(result.getName());
+//            smartCluster.setMake(result.getMake());
+//            smartCluster.setModel(result.getModel());
+//            smartCluster.setInstallationDate(result.getInstallationDate());
+
+            EntityUtils.setUnsetValues(smartCluster, result);
 
         });
 

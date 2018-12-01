@@ -4,6 +4,8 @@ package com.sjsu.cmpe.sstreet.webserver.service;
 import com.sjsu.cmpe.sstreet.webserver.model.Location;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
+import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorStatus;
+import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorStatusRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartClusterRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartNodeRepository;
 import org.modelmapper.ModelMapper;
@@ -21,15 +23,17 @@ public class SmartNodeService {
 
     private SmartNodeRepository smartNodeRepository;
     private SmartClusterRepository smartClusterRepository;
+    private SensorStatusRepository sensorStatusRepository;
 
 
     private ModelMapper modelMapper;
 
 
     @Autowired
-    public SmartNodeService(SmartNodeRepository smartNodeRepository, SmartClusterRepository smartClusterRepository) {
+    public SmartNodeService(SmartNodeRepository smartNodeRepository, SmartClusterRepository smartClusterRepository, SensorStatusRepository sensorStatusRepository) {
         this.smartNodeRepository = smartNodeRepository;
         this.smartClusterRepository = smartClusterRepository;
+        this.sensorStatusRepository = sensorStatusRepository;
         this.modelMapper = new ModelMapper();
     }
 
@@ -178,7 +182,5 @@ public class SmartNodeService {
         return ResponseEntity.ok("Smart Node Successfully Deleted");
 
     }
-
-
 
 }
