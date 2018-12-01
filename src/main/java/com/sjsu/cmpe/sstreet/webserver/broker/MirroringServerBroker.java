@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface MirroringServerBroker {
 
-    List<ConnectivityStat> getLiveConnectivityStatisticByCluster();
+    ConnectivityStat getLiveConnectivityStatisticForCluster();
+
+    List<ConnectivityStat> getLiveConnectivityStatisticForAllCluster();
 
     List<SensorData> getLiveSensorDataByCluster();
 

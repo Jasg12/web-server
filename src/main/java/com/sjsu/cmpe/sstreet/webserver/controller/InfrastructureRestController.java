@@ -5,6 +5,8 @@ import com.sjsu.cmpe.sstreet.webserver.model.Sensor;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
 import com.sjsu.cmpe.sstreet.webserver.model.search.InfrastructureStatistic;
+import com.sjsu.cmpe.sstreet.webserver.model.statistic.ConnectivityStat;
+import com.sjsu.cmpe.sstreet.webserver.service.LiveDataService;
 import com.sjsu.cmpe.sstreet.webserver.service.SearchStatisticsService;
 import com.sjsu.cmpe.sstreet.webserver.service.SmartClusterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ public class InfrastructureRestController {
 
     private SmartClusterService smartClusterService;
     private SearchStatisticsService searchStatisticsService;
+    private LiveDataService liveDataService;
 
     @Autowired
     public InfrastructureRestController(
@@ -38,57 +41,9 @@ public class InfrastructureRestController {
 
 
     @RequestMapping(value = "/infrastructure/connectivity/cluster/{state}/{city}", method = RequestMethod.GET, produces = "application/json")
-    public List getConnectivityStatistic(@PathVariable("state") String state, @PathVariable("city") String city) {
+    public List<ConnectivityStat> getConnectivityStatistic(@PathVariable("state") String state, @PathVariable("city") String city) {
 
-        SmartCluster cluster = new SmartCluster();
-        cluster.setLocation(new Location(state, city, "Street#1"));
-        cluster.setIdSmartCluster(1);
-
-        SmartCluster cluster2 = new SmartCluster();
-        cluster2.setLocation(new Location(state, city, "Street#1"));
-        cluster2.setIdSmartCluster(2);
-
-        SmartCluster cluster3 = new SmartCluster();
-        cluster3.setLocation(new Location(state, city, "Street#2"));
-        cluster3.setIdSmartCluster(3);
-
-        SmartCluster cluster4 = new SmartCluster();
-        cluster4.setLocation(new Location(state, city, "Street#2"));
-        cluster4.setIdSmartCluster(4);
-
-        SmartCluster cluster5 = new SmartCluster();
-        cluster5.setLocation(new Location(state, city, "Street#3"));
-        cluster5.setIdSmartCluster(5);
-
-        // This is the fake data for the testing purpose
-        List<Map> response = new ArrayList<>();
-        Map<String, Object> streetStat1 = new TreeMap<>();
-        streetStat1.put("cluster", cluster);
-        streetStat1.put("status", "UP");
-
-        Map<String, Object> streetStat2 = new TreeMap<>();
-        streetStat2.put("cluster", cluster2);
-        streetStat2.put("status", "DOWN");
-
-        Map<String, Object> streetStat3 = new TreeMap<>();
-        streetStat3.put("cluster", cluster3);
-        streetStat3.put("status", "DOWN");
-
-        Map<String, Object> streetStat4 = new TreeMap<>();
-        streetStat4.put("cluster", cluster4);
-        streetStat4.put("status", "DOWN");
-
-        Map<String, Object> streetStat5 = new TreeMap<>();
-        streetStat5.put("cluster", cluster5);
-        streetStat5.put("status", "DOWN");
-
-        response.add(streetStat1);
-        response.add(streetStat2);
-        response.add(streetStat3);
-        response.add(streetStat4);
-        response.add(streetStat5);
-
-        return response;
+        return liveDataService.getLiveConnectivityByStateAndCity(state, city);
     }
 
     @RequestMapping(value = "/infrastructure/{state}/{city}", method = RequestMethod.GET, produces = "application/json")
@@ -140,5 +95,57 @@ public class InfrastructureRestController {
         smartNode2.setSensors(sensors2);
 
         return result;
+    }
+
+    private List mockData(String state, String city){
+        SmartCluster cluster = new SmartCluster();
+        cluster.setLocation(new Location(state, city, "Street#1"));
+        cluster.setIdSmartCluster(1);
+
+        SmartCluster cluster2 = new SmartCluster();
+        cluster2.setLocation(new Location(state, city, "Street#1"));
+        cluster2.setIdSmartCluster(2);
+
+        SmartCluster cluster3 = new SmartCluster();
+        cluster3.setLocation(new Location(state, city, "Street#2"));
+        cluster3.setIdSmartCluster(3);
+
+        SmartCluster cluster4 = new SmartCluster();
+        cluster4.setLocation(new Location(state, city, "Street#2"));
+        cluster4.setIdSmartCluster(4);
+
+        SmartCluster cluster5 = new SmartCluster();
+        cluster5.setLocation(new Location(state, city, "Street#3"));
+        cluster5.setIdSmartCluster(5);
+
+        // This is the fake data for the testing purpose
+        List<Map> response = new ArrayList<>();
+        Map<String, Object> streetStat1 = new TreeMap<>();
+        streetStat1.put("cluster", cluster);
+        streetStat1.put("status", "UP");
+
+        Map<String, Object> streetStat2 = new TreeMap<>();
+        streetStat2.put("cluster", cluster2);
+        streetStat2.put("status", "DOWN");
+
+        Map<String, Object> streetStat3 = new TreeMap<>();
+        streetStat3.put("cluster", cluster3);
+        streetStat3.put("status", "DOWN");
+
+        Map<String, Object> streetStat4 = new TreeMap<>();
+        streetStat4.put("cluster", cluster4);
+        streetStat4.put("status", "DOWN");
+
+        Map<String, Object> streetStat5 = new TreeMap<>();
+        streetStat5.put("cluster", cluster5);
+        streetStat5.put("status", "DOWN");
+
+        response.add(streetStat1);
+        response.add(streetStat2);
+        response.add(streetStat3);
+        response.add(streetStat4);
+        response.add(streetStat5);
+
+        return response;
     }
 }
