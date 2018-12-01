@@ -4,6 +4,8 @@ import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import javax.persistence.Transient;
+
 @Table(value = "connectivity_stat")
 public class ConnectivityStat {
 
@@ -17,6 +19,9 @@ public class ConnectivityStat {
 
     @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.CLUSTERED)
     private Long timestamp;
+
+    @Transient
+    private Object entity;
 
     public ConnectivityStat() {
 
@@ -60,5 +65,15 @@ public class ConnectivityStat {
     public void setTimestamp(Long timestamp) {
 
         this.timestamp = timestamp;
+    }
+
+    public Object getEntity() {
+
+        return entity;
+    }
+
+    public void setEntity(Object entity) {
+
+        this.entity = entity;
     }
 }

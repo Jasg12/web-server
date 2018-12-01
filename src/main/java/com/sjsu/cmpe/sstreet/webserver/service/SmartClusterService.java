@@ -81,20 +81,8 @@ public class SmartClusterService {
     public SmartCluster getSmartClusterById(Integer id){
 
         Optional<SmartCluster> smartClusterOptional = smartClusterRepository.findById(id);
-        List<SmartCluster> smartCluster = new ArrayList<>();
 
-        if(!smartClusterOptional.isPresent()) {
-
-            return null;
-        }
-
-        smartClusterOptional.ifPresent( smartCluster1 ->
-
-                smartCluster.add(smartCluster1)
-
-        );
-        return smartCluster.get(0);
-
+        return smartClusterOptional.get();
     }
 
     public SmartCluster getSmartClusterByName(String Name){
@@ -145,7 +133,7 @@ public class SmartClusterService {
         return smartClusterRepository.findAllByLocation_CityAndLocation_Street(city, street);
     }
 
-    public List<SmartCluster> getSmartClusterByCity(String state, String city){
+    public List<SmartCluster> getSmartClusterByStateAndCity(String state, String city){
         return smartClusterRepository.findAllByLocation_StateAndLocation_City(state, city);
     }
 }
