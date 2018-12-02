@@ -102,6 +102,9 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
                     //$scope.sensor = true;
                     showTableStatSensorView();
                     break;
+                case 'sensordatabysensorid' :
+                    console.log('sensordatabysensorid');
+                    showTableStatSensoridView();
             }
 
         };
@@ -195,6 +198,7 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
             $('.table-data-cluster-view').removeClass('disabled');
             $('.table-data-node-view').addClass('disabled');
             $('.table-data-sensor-view').addClass('disabled');
+            $('.table-data-sensorid-view').addClass('disabled');
         }
 
         function showTableStatNodeView(){
@@ -202,6 +206,7 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
             $('.table-data-node-view').removeClass('disabled');
             $('.table-data-cluster-view').addClass('disabled');
             $('.table-data-sensor-view').addClass('disabled');
+            $('.table-data-sensorid-view').addClass('disabled');
         }
 
         function showTableStatSensorView(){
@@ -209,9 +214,17 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
             $('.table-data-sensor-view').removeClass('disabled');
             $('.table-data-node-view').addClass('disabled');
             $('.table-data-cluster-view').addClass('disabled');
+            $('.table-data-sensorid-view').addClass('disabled');
 
         }
 
+        function showTableStatSensoridView(){
+            $('.table-data-sensorid-view').removeClass('disabled');
+            $('.table-data-sensor-view').addClass('disabled');
+            $('.table-data-node-view').addClass('disabled');
+            $('.table-data-cluster-view').addClass('disabled');
+
+        }
 
 
     }
