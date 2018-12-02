@@ -1,6 +1,7 @@
 package com.sjsu.cmpe.sstreet.webserver.service;
 
 
+import com.sjsu.cmpe.sstreet.webserver.broker.MirroringServerBroker;
 import com.sjsu.cmpe.sstreet.webserver.model.Location;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
@@ -27,21 +28,28 @@ public class SmartNodeService {
     private SmartClusterRepository smartClusterRepository;
     private SensorStatusRepository sensorStatusRepository;
     private SensorStatusByTimestampRepository sensorStatusByTimestampRepository;
+    private SmartClusterService smartClusterService;
+    private BrokerService brokerService;
 
 
     private ModelMapper modelMapper;
 
-
     @Autowired
-    public SmartNodeService(SmartNodeRepository smartNodeRepository,
-                            SmartClusterRepository smartClusterRepository,
-                            SensorStatusRepository sensorStatusRepository,
-                            SensorStatusByTimestampRepository sensorStatusByTimestampRepository) {
+    public SmartNodeService(
+        SmartNodeRepository smartNodeRepository,
+        SmartClusterRepository smartClusterRepository,
+        SensorStatusRepository sensorStatusRepository,
+        SensorStatusByTimestampRepository sensorStatusByTimestampRepository,
+        SmartClusterService smartClusterService,
+        BrokerService brokerService
+    ) {
+
         this.smartNodeRepository = smartNodeRepository;
         this.smartClusterRepository = smartClusterRepository;
         this.sensorStatusRepository = sensorStatusRepository;
         this.sensorStatusByTimestampRepository = sensorStatusByTimestampRepository;
-        this.modelMapper = new ModelMapper();
+        this.smartClusterService = smartClusterService;
+        this.brokerService = brokerService;
     }
 
     public ResponseEntity<String> createSmartNode(SmartNode smartNode, Integer idSmartCluster) {
@@ -155,7 +163,6 @@ public class SmartNodeService {
 
     public SmartNode getSmartNodeByLocation(Location location){
 
-
         SmartNode smartNode = smartNodeRepository.findByLocation(location);
 
         return modelMapper.map(smartNode, SmartNode.class);
@@ -172,6 +179,7 @@ public class SmartNodeService {
     public ResponseEntity<String> deleteSmartNodeById(Integer id){
 
         smartNodeRepository.deleteById(id);
+
         return ResponseEntity.ok("Smart Node Successfully Deleted");
 
     }
@@ -179,6 +187,7 @@ public class SmartNodeService {
     public ResponseEntity<String> deleteSmartNodeByName(String name){
 
         smartNodeRepository.deleteByName(name);
+
         return ResponseEntity.ok("Smart Node Successfully Deleted");
 
     }
@@ -186,9 +195,15 @@ public class SmartNodeService {
     public ResponseEntity<String> deleteSmartNodeBySmartCluster(SmartCluster smartCluster){
 
         smartNodeRepository.deleteBySmartCluster(smartCluster);
-        return ResponseEntity.ok("Smart Node Successfully Deleted");
 
+        return ResponseEntity.ok("Smart Node Successfully Deleted");
     }
 
+    public List<SmartNode> getUnregisteredNodes(Integer clusterId){
 
+        SmartCluster cluster = smartClusterService.getSmartClusterById(clusterId);
+        MirroringServerBroker broker = brokerService.getClusterBroker(cluster);
+
+        return broker.getUnregisteredNodes();
+    }
 }

@@ -1,10 +1,9 @@
 package com.sjsu.cmpe.sstreet.webserver.model.statistic;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
-
-import javax.persistence.Transient;
 
 @Table(value = "connectivity_stat")
 public class ConnectivityStat {

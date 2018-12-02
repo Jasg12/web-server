@@ -104,4 +104,10 @@ public class SmartNodeController {
         return smartNodeService.deleteSmartNodeBySmartCluster(smartCluster);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/unregistered")
+    public List<SmartNode> getUnregisteredNodes(@RequestParam("clusterId") Integer clusterId){
+
+        return smartNodeService.getUnregisteredNodes(clusterId);
+    }
+
 }

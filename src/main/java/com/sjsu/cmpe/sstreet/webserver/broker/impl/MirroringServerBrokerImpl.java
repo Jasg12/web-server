@@ -2,6 +2,7 @@ package com.sjsu.cmpe.sstreet.webserver.broker.impl;
 
 import com.sjsu.cmpe.sstreet.webserver.broker.MirroringServerBroker;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartCluster;
+import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
 import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorData;
 import com.sjsu.cmpe.sstreet.webserver.model.statistic.ConnectivityStat;
 import org.springframework.core.ParameterizedTypeReference;
@@ -9,7 +10,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MirroringServerBrokerImpl implements MirroringServerBroker {
 
@@ -22,6 +25,7 @@ public class MirroringServerBrokerImpl implements MirroringServerBroker {
     private final String liveSensorDataByClusterAPI = "/cluster/data/";
     private final String liveSensorDataByNodeAPI = "/cluster/node/data/";
     private final String liveSensorDataBySensorAPI = "/cluster/sensor/data/";
+    private final String UNREGISTERED_NODES_API = "/smart_node/nodes/unregistered";
 
 
     public MirroringServerBrokerImpl(SmartCluster cluster){
@@ -70,6 +74,23 @@ public class MirroringServerBrokerImpl implements MirroringServerBroker {
         SensorData result = restTemplate.getForObject(url, SensorData.class);
 
         return result;
+    }
+
+    @Override
+    public List<SmartNode> getUnregisteredNodes() {
+
+        String url = buildUrl(UNREGISTERED_NODES_API);
+        Map<String, Integer> arguments = new HashMap<>();
+        arguments.put("clusterId", cluster.getIdSmartCluster());
+        ResponseEntity<List<SmartNode>> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<SmartNode>>(){},
+            arguments);
+        List<SmartNode> nodes = response.getBody();
+
+        return nodes;
     }
 
     private String buildUrl(String apiPath){

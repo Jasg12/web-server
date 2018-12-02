@@ -14,16 +14,18 @@ import java.util.List;
 public class LiveDataService {
 
     private SmartClusterService smartClusterService;
+    private BrokerService brokerService;
 
     @Autowired
-    public LiveDataService(SmartClusterService smartClusterService) {
+    public LiveDataService(SmartClusterService smartClusterService, BrokerService brokerService) {
 
         this.smartClusterService = smartClusterService;
+        this.brokerService = brokerService;
     }
 
     public ConnectivityStat getLiveClusterConnectivityStatistic(SmartCluster cluster){
 
-        MirroringServerBroker broker = getBroker(cluster);
+        MirroringServerBroker broker = brokerService.getClusterBroker(cluster);
         ConnectivityStat liveConnectivityStatisticForCluster = broker.getLiveConnectivityStatisticForCluster();
         liveConnectivityStatisticForCluster.setEntity(cluster);
 
@@ -48,10 +50,4 @@ public class LiveDataService {
 
         return result;
     }
-
-
-    private MirroringServerBroker getBroker(SmartCluster cluster){
-        return new MirroringServerBrokerImpl(cluster);
-    }
-
 }
