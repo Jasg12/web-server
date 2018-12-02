@@ -142,7 +142,7 @@
     </div>
 
     <div class="modal fade in modal-open" id="ViewNodesModal" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -152,10 +152,7 @@
                     <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
                 </div>
                 <div class="modal-body" style="font-family:sans-serif; font-size:15px;" id="ViewNodesModal-body">
-
-
                     <table class="table">
-
                         <thead class="thead-dark">
                         <tr>
                             <th>#ID</th>
@@ -168,7 +165,14 @@
                             <th>Sensors</th>
                         </tr>
                         <tr ng-repeat="node in nodeList">
-                            <td>{{ node.idSmartNode}}</td>
+                            <td>
+                                <div ng-if="node.idSmartNode != '' && node.idSmartNode != 'null'">
+                                    {{ node.idSmartNode }}
+                                </div>
+
+                                <button ng-if="node.idSmartNode === '' || node.idSmartNode === null" ng-click="registerNode(node)" class="btn btn-primary">register</button>
+
+                            </td>
                             <td>{{ node.name }}</td>
                             <td>{{ node.model }}</td>
                             <td>{{ node.make }}</td>
@@ -180,9 +184,7 @@
                             </td>
                         </tr>
                     </table>
-
             </div>
-
         </div>
     </div>
 </div>

@@ -21,7 +21,7 @@ public class SmartCluster {
 
     private Date installationDate;
 
-    private URL url;
+    private String url;
 
     @Transient
     private List<SmartNode> nodes;
@@ -30,8 +30,7 @@ public class SmartCluster {
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
     private Location location;
 
-    public SmartCluster(String name, String model, String make, Date installationDate, URL url, Location location) {
-        this.idSmartCluster = idSmartCluster;
+    public SmartCluster(String name, String model, String make, Date installationDate, String url, Location location) {
         this.name = name;
         this.model = model;
         this.make = make;
@@ -106,12 +105,12 @@ public class SmartCluster {
     }
 
 
-    public URL getUrl() {
+    public String getUrl() {
 
         return url;
     }
 
-    public void setUrl(URL url) {
+    public void setUrl(String url) {
 
         this.url = url;
     }
@@ -124,5 +123,22 @@ public class SmartCluster {
     public void setNodes(List<SmartNode> nodes) {
 
         this.nodes = nodes;
+    }
+
+    @Override
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        sb
+            .append("\n")
+            .append("{" + "\n")
+            .append("    idSmartCluster:" + idSmartCluster + "\n")
+            .append("    name:" + name + "\n")
+            .append("    model:" + model + "\n")
+            .append("    make:" + make + "\n")
+            .append("    installationDate:" + installationDate + "\n")
+            .append("    url:" + url + "\n")
+            .append("}" + "\n");
+
+        return sb.toString();
     }
 }

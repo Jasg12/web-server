@@ -9,6 +9,7 @@ import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorStatus;
 import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorStatusByTimestamp;
 import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorStatusByTimestampRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.cassandra.SensorStatusRepository;
+import com.sjsu.cmpe.sstreet.webserver.repository.mysql.LocationRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartClusterRepository;
 import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartNodeRepository;
 import org.modelmapper.ModelMapper;
@@ -30,6 +31,7 @@ public class SmartNodeService {
     private SensorStatusByTimestampRepository sensorStatusByTimestampRepository;
     private SmartClusterService smartClusterService;
     private BrokerService brokerService;
+    private LocationRepository locationRepository;
 
 
     private ModelMapper modelMapper;
@@ -41,7 +43,8 @@ public class SmartNodeService {
         SensorStatusRepository sensorStatusRepository,
         SensorStatusByTimestampRepository sensorStatusByTimestampRepository,
         SmartClusterService smartClusterService,
-        BrokerService brokerService
+        BrokerService brokerService,
+        LocationRepository locationRepository
     ) {
 
         this.smartNodeRepository = smartNodeRepository;
@@ -50,38 +53,21 @@ public class SmartNodeService {
         this.sensorStatusByTimestampRepository = sensorStatusByTimestampRepository;
         this.smartClusterService = smartClusterService;
         this.brokerService = brokerService;
+        this.locationRepository = locationRepository;
     }
 
-    public ResponseEntity<String> createSmartNode(SmartNode smartNode, Integer idSmartCluster) {
-        System.out.print("ID: "+idSmartCluster);
-        Optional<SmartCluster> smartClusterOptional = smartClusterRepository.findById(idSmartCluster);
-        List<SmartCluster> smartCluster = new ArrayList<>();
-
-        if(!smartClusterOptional.isPresent()) {
+    public SmartNode createSmartNode(SmartNode smartNode, Integer idSmartCluster) {
+        System.out.print("ID: " + idSmartCluster);
+        Optional<SmartCluster> smartCluster = smartClusterRepository.findById(idSmartCluster);
+        if(!smartCluster.isPresent()) {
 
             return null;
         }
+        smartNode.setSmartCluster(smartCluster.get());
+        Location location = smartNode.getLocation();
+        location = locationRepository.save(location);
 
-        smartClusterOptional.ifPresent( smartCluster1 ->
-
-                smartCluster.add(smartCluster1)
-
-        );
-        System.out.print("ID: "+smartCluster.get(0).getIdSmartCluster());
-
-        smartNode.setSmartCluster(smartCluster.get(0));
-
-
-        SmartNode savedSmartNode = smartNodeRepository.save(smartNode);
-
-        if(null != savedSmartNode){
-
-            return ResponseEntity.ok("Smart Node Created with ID: "+savedSmartNode.getIdSmartNode());
-        }else{
-
-            return new ResponseEntity<>("A Smart Node at requested location already exists", HttpStatus.BAD_REQUEST);
-        }
-
+        return smartNodeRepository.save(smartNode);
     }
 
     public ResponseEntity<String> updateSmartNode(SmartNode smartNode){
@@ -205,5 +191,13 @@ public class SmartNodeService {
         MirroringServerBroker broker = brokerService.getClusterBroker(cluster);
 
         return broker.getUnregisteredNodes();
+    }
+
+    public SmartNode registerNode(SmartNode smartNode){
+        SmartNode registeredNode = createSmartNode(smartNode, smartNode.getSmartCluster().getIdSmartCluster());
+        MirroringServerBroker clusterBroker = brokerService.getClusterBroker(registeredNode.getSmartCluster());
+        clusterBroker.nodeRegisteredEvent(registeredNode);
+
+        return registeredNode;
     }
 }

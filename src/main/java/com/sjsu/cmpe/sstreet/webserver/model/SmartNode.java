@@ -3,7 +3,6 @@ package com.sjsu.cmpe.sstreet.webserver.model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "smart_node")
@@ -140,5 +139,24 @@ public class SmartNode {
     public void setSensors(List<Sensor> sensors) {
 
         this.sensors = sensors;
+    }
+
+    @Override
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        sb
+            .append("\n")
+            .append("{" + "\n")
+            .append("    idSmartNode:" + idSmartNode + "\n")
+            .append("    name:" + name + "\n")
+            .append("    model:" + model + "\n")
+            .append("    make:" + make + "\n")
+            .append("    installationDate:" + installationDate + "\n")
+            .append("    locationId:" + (location != null?location.getIdLocation():"null") + "\n")
+            .append("    clusterId:" + (smartCluster != null?smartCluster.getIdSmartCluster():"null") + "\n")
+            .append("    sensors:" + (sensors != null?sensors.size():0) + "\n")
+            .append("}" + "\n");
+
+        return sb.toString();
     }
 }

@@ -13,6 +13,7 @@ var dashboardApp = angular.module('dashboardApp');
 dashboardApp.controller('IoTManagerDashboardCtrl', ['$scope', '$http', '$location', '$rootScope', '$routeParams',
     function ($scope, $http, $location, $rootScope, $routeParams) {
 
+        $scope.unregisteredNodes = [];
         $scope.menuList = [
             {href : "SmartCluster", name : "Smart Cluster Manager"},
             {href : "SmartNode", name : "Smart Node Manager"}
@@ -83,15 +84,36 @@ dashboardApp.controller('IoTManagerDashboardCtrl', ['$scope', '$http', '$locatio
 
         $scope.onClickViewNode = function(cluster){
             $scope.currentCluster = cluster;
-
-            $http.post("/smart_node/get/bySmartCluster",cluster).then(function (value){
-
+            var url = "/smart_node/nodes";
+            $http.post(url, cluster).then(function (value){
                 $scope.nodeList = value.data;
-
-
+                getUnregisteredNodes();
             });
+        };
 
+        function getUnregisteredNodes(){
+            var url = "/smart_node/unregistered?clusterId=" + $scope.currentCluster.idSmartCluster;
+            $http.get(url)
+                .success(function(data){
+                    console.log('Getting unregistered nodes', data);
+                    for(var i=0;i<data.length;i++){
+                        $scope.nodeList.push(data[i]);
+                    }
+                })
+                .error(function(error){
+                    console.error(error);
+                });
+        }
 
+        $scope.registerNode = function(node){
+            console.log("Register node request sent node:", node);
+            var url = "/smart_node/register";
+            $http.post(url, node).success(function(data){
+                console.log("Node registered node:", data);
+            })
+                .error(function(error){
+                    console.error(error);
+                });
         };
 
 

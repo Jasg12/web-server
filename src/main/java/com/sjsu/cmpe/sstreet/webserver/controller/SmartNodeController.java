@@ -3,6 +3,7 @@ package com.sjsu.cmpe.sstreet.webserver.controller;
 import com.sjsu.cmpe.sstreet.webserver.model.SearchSmartNodeBySmartClusterWrapper;
 import com.sjsu.cmpe.sstreet.webserver.model.SmartNode;
 import com.sjsu.cmpe.sstreet.webserver.model.cassandra.SensorStatus;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,12 @@ import java.util.List;
 public class SmartNodeController {
 
     private final SmartNodeService smartNodeService;
+    private Logger log;
 
     @Autowired
-    public SmartNodeController(SmartNodeService smartNodeService) {
+    public SmartNodeController(SmartNodeService smartNodeService, Logger log) {
         this.smartNodeService = smartNodeService;
+        this.log = log;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/nodes/{clusterId}", produces = "application/json")
@@ -42,9 +45,8 @@ public class SmartNodeController {
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public @ResponseBody
-    ResponseEntity<String> createSmartNode(@RequestBody SearchSmartNodeBySmartClusterWrapper searchSmartNodeBySmartClusterWrapper) {
+    @RequestMapping(method = RequestMethod.POST, value = "/create", produces = "application/json")
+    public SmartNode createSmartNode(@RequestBody SearchSmartNodeBySmartClusterWrapper searchSmartNodeBySmartClusterWrapper) {
 
         return smartNodeService.createSmartNode(searchSmartNodeBySmartClusterWrapper.getSmartNode(), searchSmartNodeBySmartClusterWrapper.getIdSmartCluster());
     }
@@ -79,8 +81,8 @@ public class SmartNodeController {
         return smartNodeService.getSmartNodeByName(name);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/get/bySmartCluster")
-    public @ResponseBody List<SmartNode> getSmartNodeBySmartCluster(@RequestBody SmartCluster smartCluster){
+    @RequestMapping(method = RequestMethod.POST, value = "/nodes", produces = "application/json")
+    public List<SmartNode> getSmartNodeBySmartCluster(@RequestBody SmartCluster smartCluster){
 
         return smartNodeService.getSmartNodeBySmartCluster(smartCluster);
     }
@@ -104,10 +106,17 @@ public class SmartNodeController {
         return smartNodeService.deleteSmartNodeBySmartCluster(smartCluster);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/unregistered")
+    @RequestMapping(method = RequestMethod.GET, value = "/unregistered", produces = "application/json")
     public List<SmartNode> getUnregisteredNodes(@RequestParam("clusterId") Integer clusterId){
 
         return smartNodeService.getUnregisteredNodes(clusterId);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/register", produces = "application/json")
+    public SmartNode registerNode(@RequestBody SmartNode smartNode){
+        log.info("Getting node register request node:{}", smartNode);
+
+        return smartNodeService.registerNode(smartNode);
     }
 
 }
