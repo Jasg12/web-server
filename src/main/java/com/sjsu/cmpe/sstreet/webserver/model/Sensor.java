@@ -1,12 +1,17 @@
 package com.sjsu.cmpe.sstreet.webserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "sensor")
 public class Sensor {
+
+    @org.springframework.data.annotation.Transient
+    @JsonIgnore
+    static final Long defaultCollectingInterval =  3600000l; //default interval 1h
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -21,6 +26,10 @@ public class Sensor {
     private Date installationDate;
 
     private String type;
+
+    private Long dataCollectingInterval = defaultCollectingInterval;
+
+    private Date lastDataCollectingTimestamp;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="location_idlocation", unique= true, nullable=true, insertable=true, updatable=true)
@@ -141,6 +150,26 @@ public class Sensor {
     public void setSmartNode(SmartNode smartNode) {
 
         this.smartNode = smartNode;
+    }
+
+    public Long getDataCollectingInterval() {
+
+        return dataCollectingInterval;
+    }
+
+    public void setDataCollectingInterval(Long dataCollectingInterval) {
+
+        this.dataCollectingInterval = dataCollectingInterval;
+    }
+
+    public Date getLastDataCollectingTimestamp() {
+
+        return lastDataCollectingTimestamp;
+    }
+
+    public void setLastDataCollectingTimestamp(Date lastDataCollectingTimestamp) {
+
+        this.lastDataCollectingTimestamp = lastDataCollectingTimestamp;
     }
 
     public void copy(Sensor sensor){
