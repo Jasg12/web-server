@@ -23,9 +23,8 @@ public class SensorController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public @ResponseBody
-    ResponseEntity<String> createSensor(@RequestBody Sensor sensor){
+    @RequestMapping(method = RequestMethod.POST, value = "/create", produces = "application/json")
+    public Sensor createSensor(@RequestBody Sensor sensor){
 
         return sensorService.createSensor(sensor);
     }
