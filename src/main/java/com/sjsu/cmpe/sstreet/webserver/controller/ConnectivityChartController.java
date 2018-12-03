@@ -29,7 +29,7 @@ public class ConnectivityChartController {
 
 
 
-    @RequestMapping(method = RequestMethod.POST ,value= "/connectivity/for/entitytype/{entity}/id/{id}//from/{from}/to/{to}", produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST ,value= "/connectivity/for/entitytype/{entity}/id/{id}/from/{from}/to/{to}", produces = "application/json")
     public List<ConnectivityStat> getConnectivityStatByTimeRange(
             @PathVariable(value = "id") Integer id,
             @RequestParam(name="entityType") EntityType entityType,
