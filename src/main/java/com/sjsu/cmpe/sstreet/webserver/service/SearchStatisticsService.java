@@ -14,10 +14,7 @@ import com.sjsu.cmpe.sstreet.webserver.repository.mysql.SmartNodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SearchStatisticsService {
@@ -53,6 +50,7 @@ public class SearchStatisticsService {
             } else{
                 InfrastructureStatistic infrastructureStatistic = new InfrastructureStatistic(city, street);
                 infrastructureStatistic.increaseClusterCount();
+                statisticMap.put(street, infrastructureStatistic);
             }
         }
 
@@ -64,6 +62,7 @@ public class SearchStatisticsService {
             } else{
                 InfrastructureStatistic infrastructureStatistic = new InfrastructureStatistic(city, street);
                 infrastructureStatistic.increaseNodesCount();
+                statisticMap.put(street, infrastructureStatistic);
             }
         }
 
@@ -75,6 +74,7 @@ public class SearchStatisticsService {
             } else{
                 InfrastructureStatistic infrastructureStatistic = new InfrastructureStatistic(city, street);
                 infrastructureStatistic.increaseSensorsCount();
+                statisticMap.put(street, infrastructureStatistic);
             }
         }
 
@@ -83,5 +83,35 @@ public class SearchStatisticsService {
 
     public List<ConnectivityStat> getConnectivityStatByTimeRange(Integer id, EntityType entityType, TimeRange timeRange){
         return  connectivityStatRepository.findAllByIdAndEntityTypeAndTimeRange(id, entityType.toString(), timeRange.getFrom().getTime(), timeRange.getTo().getTime());
+    }
+
+    public List<SmartCluster> getClustersForMapView(String state, String city){
+
+        List<SmartCluster> clusters = smartClusterRepository.findAllByLocation_StateAndLocation_City(state, city);
+        for(SmartCluster cluster:clusters){
+            List<SmartNode> nodes = smartNodeRepository.findBySmartCluster(cluster);
+            attachNodesToCluster(cluster, nodes);
+        }
+
+        return clusters;
+    }
+
+    private void attachNodesToCluster(SmartCluster cluster, List<SmartNode> nodes){
+        cluster.setNodes(new ArrayList<>());
+        for(SmartNode node:nodes){
+            List<Sensor> sensors = sensorRepository.findBySmartNode(node);
+            node.setSmartCluster(null);
+            cluster.getNodes().add(node);
+            attachSensorsToNode(node, sensors);
+        }
+
+    }
+
+    private void attachSensorsToNode(SmartNode node, List<Sensor> sensors){
+        node.setSensors(new ArrayList<>());
+        for(Sensor sensor:sensors){
+            sensor.setSmartNode(null);
+            node.getSensors().add(sensor);
+        }
     }
 }

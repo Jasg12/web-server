@@ -16,4 +16,6 @@ public interface SensorRepository extends CrudRepository<Sensor, Integer> {
 
     List<Sensor> findAllByLocation_StateAndLocation_City(String state, String city);
 
+    List<Sensor> findAllBySmartNode_IdSmartNode(Integer nodeId);
+
 }

@@ -134,6 +134,11 @@ public class SensorService {
 
     }
 
+    public List<Sensor> getAllSensorsByNodeId(Integer nodeId){
+
+        return sensorRepository.findAllBySmartNode_IdSmartNode(nodeId);
+    }
+
 }
 
 

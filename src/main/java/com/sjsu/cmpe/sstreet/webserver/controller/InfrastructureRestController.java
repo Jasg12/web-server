@@ -49,7 +49,8 @@ public class InfrastructureRestController {
     @RequestMapping(value = "/infrastructure/{state}/{city}", method = RequestMethod.GET, produces = "application/json")
     public List getInfrastructureByStateAndCity(@PathVariable("state") String state, @PathVariable("city") String city) {
 
-        return createFakeData();
+        //return createFakeData();
+        return searchStatisticsService.getClustersForMapView(state, city);
     }
 
 

@@ -4,6 +4,10 @@ public class SensorDataByNodeQuery extends SensorDataSearchQuery  {
 
     private Integer nodeId;
 
+    public SensorDataByNodeQuery(){
+        super();
+    }
+
     public SensorDataByNodeQuery(Integer nodeId) {
 
         this.nodeId = nodeId;

@@ -200,4 +200,9 @@ public class SmartNodeService {
 
         return registeredNode;
     }
+
+    public List<SmartNode> getNodesByClusterId(Integer clusterId){
+
+        return smartNodeRepository.findAllBySmartCluster_IdSmartCluster(clusterId);
+    }
 }

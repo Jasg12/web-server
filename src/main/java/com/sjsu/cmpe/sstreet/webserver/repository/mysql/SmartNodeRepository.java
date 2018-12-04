@@ -22,4 +22,6 @@ public interface SmartNodeRepository extends CrudRepository<SmartNode, Integer> 
 
     List<SmartNode> findAllByLocation_StateAndLocation_City(String state, String city);
 
+    List<SmartNode> findAllBySmartCluster_IdSmartCluster(Integer clusterId);
+
 }

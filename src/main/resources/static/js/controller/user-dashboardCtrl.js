@@ -192,7 +192,7 @@ dashboardApp.controller('UserDashboardCtrl', ['$scope', '$http', '$location', '$
         function getNodes() {
             var clusterId = $('#cluster').find(":selected").val();
             $scope.cluster = clusterId;
-            var url = '/nodes/' + clusterId;
+            var url = '/smart_node/nodes/' + clusterId;
             console.log("Prepare the call to url:" + url);
             $http.get(url)
                 .success(function(data){
@@ -207,7 +207,7 @@ dashboardApp.controller('UserDashboardCtrl', ['$scope', '$http', '$location', '$
         function getSensors() {
             var nodeId = $('#node').find(":selected").val();
             $scope.node = nodeId;
-            var url = '/sensors/' + nodeId;
+            var url = '/sensor/sensors/' + nodeId;
             console.log("Prepare the call to url:" + url);
             $http.get(url)
                 .success(function(data){

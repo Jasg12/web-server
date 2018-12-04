@@ -6,8 +6,12 @@ public class SensorDataByClusterQuery extends SensorDataSearchQuery {
 
     private Integer clusterId;
 
-    public SensorDataByClusterQuery(Integer clusterId) {
+    public SensorDataByClusterQuery(){
+        super();
+    }
 
+    public SensorDataByClusterQuery(Integer clusterId) {
+        super();
         this.clusterId = clusterId;
     }
 

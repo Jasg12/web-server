@@ -13,9 +13,9 @@ var dashboardApp = angular.module('dashboardApp');
 var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', '$http', '$location', '$rootScope', '$routeParams',
     function ($scope, $http, $location, $rootScope, $routeParams) {
         /***** Variables *****/
-        $scope.smartcluster = [];
-        $scope.smartnode = [];
-        $scope.smartsensor = [];
+        $scope.smartcluster = null;
+        $scope.smartnode = null;
+        $scope.smartsensor = null;
         $scope.content1 = [];
         $scope.content2 = [];
         $scope.content3 = [];
@@ -118,11 +118,13 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
             var url = '/sensor_data/sensor/data/by/cluster/from/' + from1.getTime() + '/to/' + to1.getTime();
             console.log("Prepare the call to url:" + url);
 
-            var data = {clusterId:1};
+            var data = {
+                clusterId: $scope.smartcluster
+            };
             $http.post(url,JSON.stringify(data))
                 .success(function(data){
                     console.log('Getting data from server', data);
-                    $scope.smartcluster = data;
+                    $scope.content1 = data;
                 })
                 .error(function(error){
                     console.error(error);
@@ -134,11 +136,13 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
             var to2 = new Date($scope.to2);
             var url = '/sensor_data/sensor/data/by/node/from/' + from2.getTime() + '/to/' + to2.getTime();
             console.log("Prepare the call to url:" + url);
-            var data = {nodeId:1};
+            var data = {
+                nodeId: $scope.smartnode
+            };
             $http.post(url,JSON.stringify(data))
                 .success(function(data){
                     console.log('Getting data from server', data);
-                    $scope.smartnode = data;
+                    $scope.content2 = data;
                 })
                 .error(function(error){
                     console.error(error);
@@ -150,11 +154,13 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
             var to3 = new Date($scope.to3);
             var url = '/sensor_data/sensor/data/by/sensor/from/' + from3.getTime() + '/to/' + to3.getTime();
             console.log("Prepare the call to url:" + url);
-            var data = {sensorId:1};
+            var data = {
+                sensorId:$scope.smartsensor
+            };
             $http.post(url,JSON.stringify(data))
                 .success(function(data){
                     console.log('Getting data from server', data);
-                    $scope.sensor = data;
+                    $scope.content3 = data;
                 })
                 .error(function(error){
                     console.error(error);
@@ -170,21 +176,6 @@ var controller = dashboardApp.controller('DataManagerDashboardCtrl', ['$scope', 
                 .success(function(data){
                     console.log('Getting data from server', data);
                     $scope.sensorid = data;
-                })
-                .error(function(error){
-                    console.error(error);
-                });
-        };
-        $scope.search2 = function () {
-            var from3 = new Date($scope.from3);
-            var to3 = new Date($scope.to3);
-            var url = '/sensor_data/sensor/data/by/sensor/from/' + from3.getTime() + '/to/' + to3.getTime();
-            console.log("Prepare the call to url:" + url);
-            var data = {sensorId:1};
-            $http.post(url,JSON.stringify(data))
-                .success(function(data){
-                    console.log('Getting data from server', data);
-                    $scope.sensor = data;
                 })
                 .error(function(error){
                     console.error(error);

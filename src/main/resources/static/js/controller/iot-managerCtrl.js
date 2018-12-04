@@ -128,6 +128,7 @@ dashboardApp.controller('IoTManagerDashboardCtrl', ['$scope', '$http', '$locatio
     }
 ]);
 
+/*
 angular.module('navBar').controller('navBarController', ['$scope', function($scope){
 
-}]);
+}]);*/
