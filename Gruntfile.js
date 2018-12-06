@@ -14,7 +14,14 @@ module.exports = function(grunt) {
         shell: {
             build: {
                 command: [
-                    //    'echo <%= secret.password %> | sudo -S whoami'
+                    'echo ' + home,
+                 //   'echo <%= secret.password %> | sudo -S whoami',
+                    'mkdir -p ' + home + 'deploy',
+                    'rm -rf ' + home + 'deploy/*.jar',
+                //    'cd ..',
+                    'mvn clean package',
+                    'pwd',
+                    'cp -r target/*.jar dist/build/deploy/web-server.jar'
                 ].join('&&')
             },
             build_docker_image: {

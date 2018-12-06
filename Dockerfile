@@ -1,6 +1,6 @@
 FROM getzephyr/java8
 
-MAINTAINER developer@getzephyr.com
+MAINTAINER aliaksei.matsarski@sjsu.edu
 
 RUN echo "*				soft	nofile			65536" >> /etc/security/limits.conf
 RUN echo "*				hard	nofile			65536" >> /etc/security/limits.conf
@@ -12,7 +12,7 @@ RUN echo "networkaddress.cache.ttl=60" >> /usr/lib/jvm/java-8-oracle/jre/lib/sec
 
 RUN echo "America/Los_Angeles" > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 
-ADD deploy/auditingcloud.jar /
+ADD deploy/web-server.jar /
 
 #defaults
 ENV SERVER_PORT 8080
