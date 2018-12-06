@@ -1,6 +1,6 @@
 {
   "name": "cmpe-181",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Build and Deployment",
   "private": true,
   "devDependencies": {
