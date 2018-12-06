@@ -55,5 +55,5 @@ module.exports = function(grunt) {
             //Placeholder for future
         }
     });
-    grunt.registerTask('buildAll', ['gitinfo','shell:build_docker_image','shell:push_docker_image']);
+    grunt.registerTask('buildAll', ['gitinfo','shell:build', 'shell:build_docker_image','shell:push_docker_image']);
 };
