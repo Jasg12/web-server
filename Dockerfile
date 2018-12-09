@@ -21,4 +21,4 @@ EXPOSE ${SERVER_PORT}
 
 # Start Tomcat
 
-CMD java -jar /auditingcloud.jar
+CMD java -jar /web-server.jar
