@@ -29,7 +29,7 @@ module.exports = function(grunt) {
                     //    'echo <%= secret.password %> | sudo -S whoami',
                     'docker login -u amatsarskisjsu -p 123ZXCzxc',
                     'cd ' + home,
-                    'docker build --tag="amatsarskisjsu/smart-street/web-server:<%= gitinfo.my.custom.command %>" .',
+                    'docker build --tag="amatsarskisjsu/web-server:<%= gitinfo.my.custom.command %>" .'
                 ].join('&&'),
                 options: {
                     execOptions: {
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                     //    'echo <%= secret.password %> | sudo -S whoami',
                     //    'echo "gshivani08"|docker login',
                     'docker login -u amatsarskisjsu -p 123ZXCzxc',
-                    'docker push amatsarskisjsu/smart-street/web-server:<%= gitinfo.my.custom.command %>'
+                    'docker push amatsarskisjsu/web-server:<%= gitinfo.my.custom.command %>'
                 ].join('&&')
             }
         },
