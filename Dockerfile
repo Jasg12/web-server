@@ -15,9 +15,9 @@ RUN echo "America/Los_Angeles" > /etc/timezone && dpkg-reconfigure --frontend no
 ADD deploy/web-server.jar /
 
 #defaults
-ENV SERVER_PORT 8080
+#ENV SERVER_PORT 8080
 
-EXPOSE ${SERVER_PORT}
+#EXPOSE ${SERVER_PORT}
 
 # Start Tomcat
 
