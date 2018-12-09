@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                 //    'cd ..',
                     'mvn clean package',
                     'pwd',
-                    'cp -r target/*.jar dist/build/deploy/web-server.jar'
+                    'cp -r target/*.jar deploy/web-server.jar'
                 ].join('&&')
             },
             build_docker_image: {
