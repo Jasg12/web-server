@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 command: [
                     //    'echo <%= secret.password %> | sudo -S whoami',
                     //    'echo "gshivani08"|docker login',
-                    'docker login -u amatsarskisjsu -p dockerhub',
+                    'docker login -u amatsarskisjsu -p 123ZXCzxc',
                     'docker push amatsarskisjsu/web-server:<%= gitinfo.my.custom.command %>',
                     //    'echo "docker.devops"|docker login',
                     'docker push amatsarskisjsu/web-server:<%= gitinfo.my.custom.command %>'
